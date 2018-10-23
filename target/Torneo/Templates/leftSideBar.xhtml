@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+	  xmlns:ft="http://primefaces.prime.com.tr/facestrace"> 
+
+<ft:trace />
+<h:head></h:head> 
+<h:body>   
+       <b:column col-sm="3" col-md="2" styleClass="sidebar">
+           <b:listLinks>
+               <!-- <b:dropMenu value="Players" iconAwesome="fa-male">
+			      <b:navLink value="Listar" href="#"></b:navLink>
+			      <b:navLink value="Crear" href="#"></b:navLink>			      
+			   </b:dropMenu>
+			   <b:dropMenu value="Managers" iconAwesome="birthday-cake">
+			      <b:navLink value="Listar" href="#"></b:navLink>
+			      <b:navLink value="Crear" href="#"></b:navLink>			      
+			   </b:dropMenu>
+			   <b:dropMenu value="Teams" iconAwesome="fa-users">
+			      <b:navLink value="Listar" href="#"></b:navLink>
+			      <b:navLink value="Crear" href="#"></b:navLink>			      
+			   </b:dropMenu>
+			   <b:dropMenu value="Championships" iconAwesome="futbol-o">
+			      <b:navLink value="Listar" href="#"></b:navLink>
+			      <b:navLink value="Crear" href="#"></b:navLink>			      
+			   </b:dropMenu> --> 
+			   
+			   <b:accordion>
+				  <b:panel id="player" title="Players" iconAwesome="fa-male">
+					  	<b:navCommandLink actionListener="#{indexAdmBean.DevolverJugadores()}" value="Listar" update="" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarJugador()}" value="Crear" update=":mainContainer" />
+				  </b:panel>
+				  <b:panel id="manager" title="Managers" iconAwesome="fa-user">
+				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverDirectores()}" value="Listar" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarDirector()}" value="Crear" update=":mainContainer" />
+				  </b:panel>
+				  <b:panel id="teams" title="Teams" iconAwesome="fa-users">
+				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverEquipos()}" value="Listar" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarEquipo()}" value="Crear" update=":mainContainer" />
+				  </b:panel>
+				  <b:panel id="champs" title="Championships" iconAwesome="futbol-o">
+				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverDirectores()}" value="Listar" update="" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.DevolverDirectores()}" value="Crear" update="" />
+				  </b:panel>
+				</b:accordion>
+				
+				
+      <!-- <b:navCommandLink onclick="ajax:navLinkBean.navigateToPage(1, 'b:navCommandLink')"
+                        value=" Page 2 (NavCommandLink)" update="**:targetPage" /> -->
+           </b:listLinks>
+           
+           <!-- <b:listLinks>
+               <b:navLink value="Nav item" />
+               <b:navLink value="Nav item again" />
+               <b:navLink value="One more nav" />
+               <b:navLink value="Another nav item" />
+               <b:navLink value="More navigation" />
+           </b:listLinks>
+           <b:listLinks>
+               <b:navLink value="Nav item again" />
+               <b:navLink value="One more nav" />
+               <b:navLink value="Another nav item" />
+           </b:listLinks> -->
+       </b:column>                 
+</h:body> 
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head></h:head> 
+<body>
+    <rich:panel>
+        <f:facet name="header">
+        Write your own custom rich components with built-in AJAX support
+        </f:facet>
+		<h:outputText value="Panel Body" /> 
+		<h:form prependId="false">
+		    <h3>JSF Register Form</h3>
+			<h:outputText value="Nombre" />
+			<h:inputText id="nombre" value="#{registerBean.nombre}"></h:inputText>
+			<h:message for="nombre"></h:message>
+			<br></br><br></br>
+			
+			<h:outputText value="Apellidos" />
+			<h:inputText id="apellidos" value="#{registerBean.apellidos}"></h:inputText>
+			<h:message for="apellidos"></h:message>
+			<br></br><br></br>
+			
+			<h:outputText value="Email" />
+			<h:inputText id="email" value="#{registerBean.email}"></h:inputText>
+			<h:message for="email"></h:message>
+			<br></br><br></br>
+			
+			<h:outputText value="Cedula" />
+			<h:inputText id="cedula" value="#{registerBean.cedula}"></h:inputText>
+			<h:message for="cedula"></h:message>
+			<br></br><br></br>
+			
+			<h:outputText value="Password" />
+			<h:inputSecret id="password" value="#{registerBean.password}"></h:inputSecret>
+			<h:message for="password"></h:message>
+			<br></br><br></br>
+			
+			
+			<h:outputText value="#{registerBean.outputText}" />
+			<c:choose>
+				<c:when test="#{registerBean.util}">
+					<h:commandLink value=" Login" action="/login.xhtml?faces-redirect=true"/>
+				</c:when>
+			</c:choose>
+			<br></br><br></br>
+						
+			<h:commandButton action="#{registerBean.Registro()}"
+				value="Enviar"></h:commandButton>
+	    </h:form>
+	</rich:panel>
+</body> 
+</html>
