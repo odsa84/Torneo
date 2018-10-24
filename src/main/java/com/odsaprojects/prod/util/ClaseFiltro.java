@@ -47,7 +47,6 @@ public class ClaseFiltro implements Filter {
 	public void destroy() {}
 
 	public void init(FilterConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
 
 	}  
 }
