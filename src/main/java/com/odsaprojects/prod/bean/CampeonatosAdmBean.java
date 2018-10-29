@@ -89,145 +89,6 @@ private static final long serialVersionUID = 1L;
 			editarCampeonatos = true;
 			}
 	}
-
-	public void BuscarCampeonatos() {
-		dao = new CampeonatosDaoImpl();		
-		
-		List<Campeonatos> util = dao.DevolverCampeonatos();
-		shampList = util;
-		shamps = new HashMap<>();
-		
-		for (Campeonatos unCampeonato : util) {
-			shamps.put(unCampeonato.getNombre(), unCampeonato.getId());
-			
-		}
-	}
-	
-	public void CrearCampeonato() {
-		try {
-			Campeonatos unCampeonato = new Campeonatos();
-			dao = new CampeonatosDaoImpl();
-			daoUsuario = new UsuariosDaoImpl();
-											
-			unCampeonato.setNombre(getNombre());
-			unCampeonato.setCantEquipos(getCantEquipos());
-			unCampeonato.setFechaInicio(getFechaInicio());
-			unCampeonato.setFechaFin(getFechaFin());
-			unCampeonato.setEstado(1);
-			unCampeonato.setIdCampeonato(CrearIdCampeonato(getNombre()));
-			
-			Usuarios user = new Usuarios();
-			String strVar = String.valueOf(session.get("idUsuario"));
-			Long var = Long.valueOf(strVar);
-			user = daoUsuario.BuscarUsuarioById(var);
-			unCampeonato.setUsuario(user);
-				
-			if(dao.RegistrarCampeonatos(unCampeonato)) {
-				session.sendMessageToView(Constantes.CREATESHPSUCCESS + getNombre());
-				LimpiarCampos();			
-			} else {
-				session.sendErrorMessageToView(Constantes.CREATESHPERROR);
-			}
-		} catch (Exception e) {
-			session.sendErrorMessageToView(e.getMessage());
-			LOG.error(e.getMessage(), e);
-		}		
-	}
-	
-	public void EditarShamps() {
-		Campeonatos unCampeonato = new Campeonatos();
-		dao = new CampeonatosDaoImpl();
-				
-		unCampeonato.setId(this.id);
-		unCampeonato.setNombre(getNombre());
-		unCampeonato.setCantEquipos(getCantEquipos());
-		unCampeonato.setFechaInicio(getFechaInicio());
-		unCampeonato.setFechaFin(getFechaFin());
-		unCampeonato.setIdCampeonato(getIdCampeonato());
-		unCampeonato.setUsuario(getUsuario());
-		unCampeonato.setEstado(1);
-				
-		try {		
-			
-			if (dao.RegistrarCampeonatos(unCampeonato)) {				
-				session.sendMessageToView(Constantes.EDITSHPSUCCESS + getNombre());
-			} else {
-				session.sendErrorMessageToView(Constantes.EDITSHPERROR);
-			}
-		} catch (Exception e) {
-			LOG.error(e.getMessage());
-			session.sendErrorMessageToView(e.getMessage());
-		}
-	}
-	
-	
-	/*Funcion para cargar los valores en el formulario de editar*/
-	public void EditarCampeonato(Campeonatos shp) {
-		setId(shp.getId());
-		setNombre(shp.getNombre());
-		setCantEquipos(shp.getCantEquipos());
-		setFechaInicio(shp.getFechaInicio());
-		setFechaFin(shp.getFechaFin());
-		setIdCampeonato(shp.getIdCampeonato());
-		setUsuario(shp.getUsuario());
-		
-		campeonatos = false;
-		listaCampeonatos = false;
-		editarCampeonatos = true;
-	}
-	
-	public void DeleteCampeonato() {
-		dao = new CampeonatosDaoImpl();
-		Campeonatos shp = dao.BuscarCampeonatoPorId(this.id);		
-		shp.setEstado(0);
-		try {
-			if(dao.RegistrarCampeonatos(shp)) {
-				shampList = dao.DevolverCampeonatos();
-				session.sendMessageToView("Eliminado " + shp.getNombre());
-			} else {
-				session.sendErrorMessageToView("Error al eliminar el campeonato");
-			}
-		} catch (Exception e) {
-			session.sendErrorMessageToView(e.getMessage());
-			LOG.error(e.getMessage(), e);
-		}
-		
-	}
-
-	public void LimpiarCampos() {
-		setNombre(null);
-		setCantEquipos(0);
-		setFechaInicio(null);
-		setFechaFin(null);
-	}
-	
-	public String CrearIdCampeonato(String nombre) {		
-		String nombreAux = nombre.replace(" ", "");
-		Date fechaHoraActual = new Date();
-		DateFormat formato = new SimpleDateFormat("ddmmyyyHHmmss");
-		String fechaHoraFormateada = formato.format(fechaHoraActual);
-		
-		String result = nombreAux + fechaHoraFormateada;
-		
-		return result.toLowerCase();
-	}
-	
-	public void LoadDeleteCampeonato(Campeonatos shp) {
-		this.id = shp.getId();
-	}
-	
-	public void LoadListarCampeonatos() {
-		session.redirectPage("campeonatosAdm.xhtml?shp=0");
-	}
-	
-	public void DevolverCampeonatos() {
-		dao = new CampeonatosDaoImpl();
-		
-		shampList = dao.DevolverCampeonatos();
-		
-		this.campeonatos = false;
-		this.listaCampeonatos = true;
-	}
 	
 	public Long getId() {
 		return id;
@@ -331,6 +192,156 @@ private static final long serialVersionUID = 1L;
 
 	public void setUsuario(Usuarios usuario) {
 		this.usuario = usuario;
+	}
+	
+	public void BuscarCampeonatos() {
+		dao = new CampeonatosDaoImpl();		
+		
+		session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);	
+		
+		List<Campeonatos> util = dao.BuscarCampeonatosPorUsuario(idUser);
+		shampList = util;
+		shamps = new HashMap<>();
+		
+		if(util != null) {
+			for (Campeonatos unCampeonato : util) {
+				shamps.put(unCampeonato.getNombre(), unCampeonato.getId());
+				
+			}
+		}
+	}
+	
+	public void CrearCampeonato() {
+		try {
+			Campeonatos unCampeonato = new Campeonatos();
+			dao = new CampeonatosDaoImpl();
+			daoUsuario = new UsuariosDaoImpl();
+											
+			unCampeonato.setNombre(getNombre());
+			unCampeonato.setCantEquipos(getCantEquipos());
+			unCampeonato.setFechaInicio(getFechaInicio());
+			unCampeonato.setFechaFin(getFechaFin());
+			unCampeonato.setEstado(1);
+			unCampeonato.setIdCampeonato(CrearIdCampeonato(getNombre()));
+			
+			Usuarios user = new Usuarios();
+			String strVar = String.valueOf(session.get("idUsuario"));
+			Long var = Long.valueOf(strVar);
+			user = daoUsuario.BuscarUsuarioById(var);
+			unCampeonato.setUsuario(user);
+				
+			if(dao.RegistrarCampeonatos(unCampeonato)) {
+				session.sendMessageToView(Constantes.CREATESHPSUCCESS + getNombre());
+				LimpiarCampos();			
+			} else {
+				session.sendErrorMessageToView(Constantes.CREATESHPERROR);
+			}
+		} catch (Exception e) {
+			session.sendErrorMessageToView(e.getMessage());
+			LOG.error(e.getMessage(), e);
+		}		
+	}
+	
+	public void EditarShamps() {
+		Campeonatos unCampeonato = new Campeonatos();
+		dao = new CampeonatosDaoImpl();
+				
+		unCampeonato.setId(this.id);
+		unCampeonato.setNombre(getNombre());
+		unCampeonato.setCantEquipos(getCantEquipos());
+		unCampeonato.setFechaInicio(getFechaInicio());
+		unCampeonato.setFechaFin(getFechaFin());
+		unCampeonato.setIdCampeonato(getIdCampeonato());
+		unCampeonato.setUsuario(getUsuario());
+		unCampeonato.setEstado(1);
+				
+		try {		
+			
+			if (dao.RegistrarCampeonatos(unCampeonato)) {				
+				session.sendMessageToView(Constantes.EDITSHPSUCCESS + getNombre());
+			} else {
+				session.sendErrorMessageToView(Constantes.EDITSHPERROR);
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+			session.sendErrorMessageToView(e.getMessage());
+		}
+	}
+	
+	
+	/*Funcion para cargar los valores en el formulario de editar*/
+	public void EditarCampeonato(Campeonatos shp) {
+		setId(shp.getId());
+		setNombre(shp.getNombre());
+		setCantEquipos(shp.getCantEquipos());
+		setFechaInicio(shp.getFechaInicio());
+		setFechaFin(shp.getFechaFin());
+		setIdCampeonato(shp.getIdCampeonato());
+		setUsuario(shp.getUsuario());
+		
+		campeonatos = false;
+		listaCampeonatos = false;
+		editarCampeonatos = true;
+	}
+	
+	public void DeleteCampeonato() {
+		dao = new CampeonatosDaoImpl();
+		Campeonatos shp = dao.BuscarCampeonatoPorId(this.id);		
+		shp.setEstado(0);
+		try {
+			if(dao.RegistrarCampeonatos(shp)) {
+				String strVar = String.valueOf(session.get("idUsuario"));
+				Long idUser = Long.valueOf(strVar);	
+				shampList = dao.BuscarCampeonatosPorUsuario(idUser);
+				session.sendMessageToView("Eliminado " + shp.getNombre());
+			} else {
+				session.sendErrorMessageToView("Error al eliminar el campeonato");
+			}
+		} catch (Exception e) {
+			session.sendErrorMessageToView(e.getMessage());
+			LOG.error(e.getMessage(), e);
+		}
+		
+	}
+
+	public void LimpiarCampos() {
+		setNombre(null);
+		setCantEquipos(0);
+		setFechaInicio(null);
+		setFechaFin(null);
+	}
+	
+	public String CrearIdCampeonato(String nombre) {		
+		String nombreAux = nombre.replace(" ", "");
+		Date fechaHoraActual = new Date();
+		DateFormat formato = new SimpleDateFormat("ddmmyyyHHmmss");
+		String fechaHoraFormateada = formato.format(fechaHoraActual);
+		
+		String result = nombreAux + fechaHoraFormateada;
+		
+		return result.toLowerCase();
+	}
+	
+	public void LoadDeleteCampeonato(Campeonatos shp) {
+		this.id = shp.getId();
+	}
+	
+	public void LoadListarCampeonatos() {
+		session.redirectPage("campeonatosAdm.xhtml?shp=0");
+	}
+	
+	public void DevolverCampeonatos() {
+		dao = new CampeonatosDaoImpl();
+		
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);	
+		
+		shampList = dao.BuscarCampeonatosPorUsuario(idUser);
+		
+		this.campeonatos = false;
+		this.listaCampeonatos = true;
 	}
 
 }

@@ -16,7 +16,7 @@ public interface JugadoresDao extends Serializable {
 	
 	public boolean RegistrarJugador(Jugadores jugador);
 	
-	public List<Jugadores> DevolverJugadores();
+	public List<Jugadores> DevolverJugadores(long idUsuario);
 	
 	public List<Jugadores> BuscarJugadoresPorEquipos(Long long1);
 	

@@ -31,11 +31,8 @@ public class EquiposDaoImpl implements EquiposDao {
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("Torneo");
 	EntityManager em = emf.createEntityManager();
 
-	/**
-	 * 
-	 */
 	public EquiposDaoImpl() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public boolean RegistrarEquipo(Equipos equipo) {
@@ -54,11 +51,12 @@ public class EquiposDaoImpl implements EquiposDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Equipos> DevolverEquipos() {
+	public List<Equipos> DevolverEquipos(long idUsuario) {
 		List<Equipos> result = null;
 		
 		try {
-			Query query = em.createNamedQuery("Equipos.findAll");			
+			Query query = em.createNamedQuery("Equipos.findByIdUsuario");
+			query.setParameter("idUsuario", idUsuario);
 			if(query.getResultList().size() != 0)
 				result = query.getResultList();
 		} catch (Exception e) {
@@ -69,12 +67,13 @@ public class EquiposDaoImpl implements EquiposDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Equipos> DevolverEquiposNoSinEquipo(long id) {
+	public List<Equipos> DevolverEquiposNoSinEquipo(long id, long idUsuario) {
 		List<Equipos> result = null;
 		
 		try {
 			Query query = em.createNamedQuery("Equipos.findAllNoSinEquipo");
 			query.setParameter("id", id);
+			query.setParameter("idUsuario", idUsuario);
 			if(query.getResultList().size() != 0)
 				result = query.getResultList();
 		} catch (Exception e) {

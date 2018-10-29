@@ -25,7 +25,10 @@ import javax.persistence.Table;
 	@NamedQuery(name = "Equipos.findByNombre", query = "SELECT e FROM Equipos e WHERE e.nombre LIKE :nombre"),
 	@NamedQuery(name = "Equipos.findById", query = "SELECT e FROM Equipos e WHERE e.id = :id"),
 	@NamedQuery(name = "Equipos.findByIdDirector", query = "SELECT e FROM Equipos e WHERE e.directores.id = :idDirector AND e.estado = 1"),
-	@NamedQuery(name = "Equipos.findAllNoSinEquipo", query = "SELECT e FROM Equipos e WHERE e.estado = 1 AND e.id != :id")})
+	@NamedQuery(name = "Equipos.findAllNoSinEquipo", query = "SELECT e FROM Equipos e INNER JOIN e.directores d INNER JOIN "
+			+ "d.usuarios u WHERE u.id = :idUsuario AND e.estado = 1 AND e.id != :id"),
+	@NamedQuery(name = "Equipos.findByIdUsuario", query = "SELECT e FROM Equipos e INNER JOIN e.directores d INNER JOIN "
+			+ "d.usuarios u WHERE u.id = :idUsuario AND d.estado = 1")})
 public class Equipos implements Serializable {
 
 	private static final long serialVersionUID = 1L;

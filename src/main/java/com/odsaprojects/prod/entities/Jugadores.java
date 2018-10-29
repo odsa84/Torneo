@@ -5,6 +5,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.Date;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +23,9 @@ import javax.persistence.Table;
 @NamedQueries({ @NamedQuery(name = "Jugadores.findAll", query = "SELECT j FROM Jugadores j WHERE j.estado = 1"),
 	@NamedQuery(name = "Jugadores.findByCedula", query = "SELECT j FROM Jugadores j WHERE j.cedula LIKE :cedula AND j.estado = 1"),
 	@NamedQuery(name = "Jugadores.findByEquipo", query = "SELECT j FROM Jugadores j WHERE j.equipos.id = :equipo AND j.estado = 1"),
-	@NamedQuery(name = "Jugadores.findById", query = "SELECT j FROM Jugadores j WHERE j.id = :id AND j.estado = 1")})
+	@NamedQuery(name = "Jugadores.findById", query = "SELECT j FROM Jugadores j WHERE j.id = :id AND j.estado = 1"),
+	@NamedQuery(name = "Jugadores.findByIdUsuario", query = "SELECT j FROM Jugadores j INNER JOIN j.equipos e INNER JOIN "
+			+ "e.directores d INNER JOIN d.usuarios u WHERE u.id = :idUsuario AND d.estado = 1")})
 public class Jugadores implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,19 +34,19 @@ public class Jugadores implements java.io.Serializable {
 	private String nombres;
 	private String apellidos;
 	private String cedula;
-	private int edad;
+	private Date fechaNacimiento;
 	private String camiseta;
 	private Equipos equipos;
-	private int estado;
+	private int estado;	
 
 	public Jugadores() {
 	}
 
-	public Jugadores(String nombres, String apellidos, String cedula, int edad, String camiseta, Equipos equipos) {
+	public Jugadores(String nombres, String apellidos, String cedula, Date fechaNacimiento, String camiseta, Equipos equipos) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.cedula = cedula;
-		this.edad = edad;
+		this.fechaNacimiento = fechaNacimiento;
 		this.camiseta = camiseta;
 		this.equipos = equipos;
 	}
@@ -84,15 +89,6 @@ public class Jugadores implements java.io.Serializable {
 		this.cedula = cedula;
 	}
 
-	@Column(name = "edad", nullable = false)
-	public int getEdad() {
-		return this.edad;
-	}
-
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
-
 	@Column(name = "camiseta", nullable = false, length = 2)
 	public String getCamiseta() {
 		return this.camiseta;
@@ -118,6 +114,14 @@ public class Jugadores implements java.io.Serializable {
 
 	public void setEstado(int estado) {
 		this.estado = estado;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 }

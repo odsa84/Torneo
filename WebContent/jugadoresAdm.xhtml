@@ -24,72 +24,72 @@
 			<b:column col-sm="5" offset-sm="3" col-md="7" offset="2" styleClass="main">	
 				<c:choose>
 					<c:when test="#{jugadoresAdmBean.jugador}">
-						<b:panel title="Datos del Jugador" id="targetPage2" look="primary"
+						<b:panel title="Crear Jugador" id="targetPage2" look="primary"
 							collapsible="true">
 							<h:form styleClass="form-signin" id="mainForm2">
-								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
-								<b:container style="">									
+								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />								
 									<b:row>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Nombres" for="nombres" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="nombres" required="true"
 												placeholder="Nombres" value="#{jugadoresAdmBean.nombres}" />
 										</b:column>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Apellidos" for="apellidos" />
 										</b:column>
-										<b:column medium-screen="3">
-											<b:inputText id="apellidos" required="true"
-												placeholder="Apellidos"
+										<b:column medium-screen="4">
+											<b:inputText id="apellidos" required="true" placeholder="Apellidos"
 												value="#{jugadoresAdmBean.apellidos}" />
 										</b:column>
 									</b:row>
 									<b:row>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="CI/Pasaporte" for="ci/pasaporte" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="identificacion" required="true"
 												placeholder="CI/Pasaporte"
 												value="#{jugadoresAdmBean.cedula}" />
 										</b:column>
-										<b:column medium-screen="1">
-											<h:outputText value="Edad" for="edad" />
+										<b:column medium-screen="2">
+											<h:outputText value="Fecha de Nac." for="fecha de nacimiento" />
 										</b:column>
-										<b:column medium-screen="3">
-											<b:inputText id="edad" required="true" placeholder="Edad"
-												value="#{jugadoresAdmBean.edad}" />
-										</b:column>
+										<b:column span="4">
+											<b:dateTimePicker value="#{jugadoresAdmBean.fechaNacimiento}"
+							                    icon-position="right"
+							                    show-date="true"
+							                    show-time="false"
+							                    show-icon="true" />
+	      								</b:column>
 									</b:row>
 									<b:row>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Numero" for="numero" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="numero" required="true" placeholder="Numero"
 												value="#{jugadoresAdmBean.camiseta}" />
 										</b:column>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Equipo" for="equipo" />
 										</b:column>
 										<b:formGroup>
-											<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="2"
+											<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="4"
 												labelColMd="2" tooltip="Seleccione el equipo" required="true">
 												<f:selectItems value="#{jugadoresAdmBean.equips}" />
 											</b:selectOneMenu>
 										</b:formGroup>
 									</b:row>
 									<b:row>
-										<b:column span="2" offset="2">
+										<b:column span="4" offset="2">
 											<b:commandButton look="primary btn-block" action="#{jugadoresAdmBean.Crearjugador()}" value="Enviar" style="width: 50%"/>
 										</b:column>
-										<b:column span="2" offset="1">
+										<b:column span="4" offset="1">
 											<b:commandButton look="danger" onclick="history.back(); return false;" value="Cancelar" style="width: 50%" />
 										</b:column>
 									</b:row>
-								</b:container>
 							</h:form>
 						</b:panel>
 					</c:when>
@@ -101,7 +101,7 @@
 							<h:form id="mainForm3">
 								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
 								<b:dataTable value="#{jugadoresAdmBean.jugList}" var="ply"
-									page-length="10" row-highlight="true">
+									page-length="10" row-highlight="true" responsive="true">
 									<b:dataTableColumn value="#{ply.camiseta}" label="Numero" />
 									<b:dataTableColumn value="#{ply.nombres}" />
 									<b:dataTableColumn value="#{ply.apellidos}" />
@@ -155,12 +155,16 @@
 										<b:column medium-screen="3">
 											<b:inputText id="identificacion" required="true" placeholder="CI/Pasaporte" value="#{jugadoresAdmBean.cedula}" />
 										</b:column>
-										<b:column medium-screen="1">
-											<h:outputText value="Edad" for="edad" />
+										<b:column medium-screen="2">
+											<h:outputText value="Fecha de Nac." for="fecha de nacimiento" />
 										</b:column>
-										<b:column medium-screen="3">
-											<b:inputText id="edad" required="true" placeholder="Edad" value="#{jugadoresAdmBean.edad}" />
-										</b:column>
+										<b:column span="4">
+											<b:dateTimePicker value="#{jugadoresAdmBean.fechaNacimiento}"
+							                    icon-position="right"
+							                    show-date="true"
+							                    show-time="false"
+							                    show-icon="true" />
+	      								</b:column>
 									</b:row>
 									<b:row>
 										<b:column medium-screen="1">

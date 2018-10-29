@@ -11,10 +11,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import com.odsaprojects.prod.dao.DirectoresDao;
 import com.odsaprojects.prod.dao.EquiposDao;
+import com.odsaprojects.prod.dao.UsuariosDao;
 import com.odsaprojects.prod.dao.impl.DirectoresDaoImpl;
 import com.odsaprojects.prod.dao.impl.EquiposDaoImpl;
+import com.odsaprojects.prod.dao.impl.UsuariosDaoImpl;
 import com.odsaprojects.prod.entities.Directores;
 import com.odsaprojects.prod.entities.Equipos;
+import com.odsaprojects.prod.entities.Usuarios;
 import com.odsaprojects.prod.util.Constantes;
 import com.odsaprojects.prod.util.SessionUtils;
 
@@ -41,6 +44,7 @@ public class DirectoresAdmBean implements Serializable {
 	
 	private DirectoresDao dao;
 	private EquiposDao daoEquipo;
+	private UsuariosDao daoUsuario;
 	private List<Directores> dirList;
 	
 	private int dir;
@@ -169,7 +173,9 @@ public class DirectoresAdmBean implements Serializable {
 
 	public void CrearDirector() {
 		Directores unDirector = new Directores();
+		Usuarios unUsuario = new Usuarios();
 		dao = new DirectoresDaoImpl();
+		daoUsuario = new UsuariosDaoImpl();
 		
 		unDirector.setNombres(getNombres());
 		unDirector.setApellidos(getApellidos());
@@ -177,6 +183,10 @@ public class DirectoresAdmBean implements Serializable {
 		unDirector.setCedula(getCedula());
 		unDirector.setCelular(getCelular());
 		unDirector.setEstado(1);
+		
+		unUsuario = (Usuarios) session.get("objUsuario");
+		
+		unDirector.addUsuarios(unUsuario);
 		
 		if(dao.RegistrarDirector(unDirector)) {
 			session.sendMessageToView(Constantes.CREATEMNGSUCCESS + getNombres() + " " + getApellidos());
@@ -188,7 +198,8 @@ public class DirectoresAdmBean implements Serializable {
 	
 	public void EditarDirector() {
 		Directores unDirector = new Directores();
-		dao = new DirectoresDaoImpl();		
+		dao = new DirectoresDaoImpl();	
+		Usuarios unUsuario = new Usuarios();
 		
 		unDirector.setId(this.id);
 		unDirector.setNombres(getNombres());
@@ -197,6 +208,10 @@ public class DirectoresAdmBean implements Serializable {
 		unDirector.setCedula(getCedula());
 		unDirector.setCelular(getCelular());
 		unDirector.setEstado(1);
+		
+		unUsuario = (Usuarios) session.get("objUsuario");
+		
+		unDirector.addUsuarios(unUsuario);
 		
 		try {
 			if(dao.RegistrarDirector(unDirector)) {
@@ -212,7 +227,12 @@ public class DirectoresAdmBean implements Serializable {
 	public void DeleteDirector() {
 		dao = new DirectoresDaoImpl();
 		daoEquipo = new EquiposDaoImpl();
-		Directores dirs = dao.BuscarDirectorPorId(this.dir);
+		
+		//session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long var = Long.valueOf(strVar);
+		
+		Directores dirs = dao.BuscarDirectorPorId(this.dir, var);
 		Equipos eqp = daoEquipo.BuscarEquiposPorIdDirector(dirs.getId());
 		if(eqp != null) {
 			session.sendWarningMessageToView(dirs.getNombres() + " " + dirs.getApellidos() + Constantes.DELETEDIRECTORWARN);
@@ -221,7 +241,8 @@ public class DirectoresAdmBean implements Serializable {
 			
 			try {
 				if(dao.RegistrarDirector(dirs)) {
-					dirList = dao.DevolverDirectores();
+					//dirList = dao.DevolverDirectores();
+					DevolverDirectores();
 					session.sendMessageToView("Eliminado " + dirs.getNombres() + " " + dirs.getApellidos());
 				} else {
 					session.sendErrorMessageToView(Constantes.DELETEMNGERROR);
@@ -252,7 +273,11 @@ public class DirectoresAdmBean implements Serializable {
 	public void DevolverDirectores() {
 		dao = new DirectoresDaoImpl();
 		
-		dirList = dao.DevolverAlmostAll(0);
+		session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);
+		
+		dirList = dao.DevolverDirPorUsuario(idUser);
 	}
 	
 	public void LimpiarCampos() {

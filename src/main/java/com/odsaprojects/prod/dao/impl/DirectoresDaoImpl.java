@@ -52,11 +52,12 @@ public class DirectoresDaoImpl implements DirectoresDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Directores> DevolverDirectores() {
+	public List<Directores> DevolverDirectores(long idUsuario) {
 		List<Directores> result = null;
 		
 		try {
 			Query query = em.createNamedQuery("Directores.findAll");
+			query.setParameter("idUsuario", idUsuario);
 			if(query.getResultList().size() != 0)
 				result = query.getResultList();
 		} catch (Exception e) {
@@ -67,12 +68,13 @@ public class DirectoresDaoImpl implements DirectoresDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Directores BuscarDirector(String cedula) {
+	public Directores BuscarDirector(String cedula, long idUsuario) {
 		Directores result = null;
 		
 		try {
 			Query query = em.createNamedQuery("Directores.findByCedula");
 			query.setParameter("cedula", cedula);
+			query.setParameter("idUsuario", idUsuario);
 			List<Directores> director = query.getResultList();
 			if(director.size() != 0) {
 				result = director.get(0);
@@ -85,12 +87,13 @@ public class DirectoresDaoImpl implements DirectoresDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Directores BuscarDirectorPorId(long id) {
+	public Directores BuscarDirectorPorId(long id, long idUsuario) {
 		Directores result = null;
 		
 		try {
 			Query query = em.createNamedQuery("Directores.findById");
 			query.setParameter("id", id);
+			query.setParameter("idUsuario", idUsuario);
 			List<Directores> director = query.getResultList();
 			if(director.size() != 0) {
 				result = director.get(0);
@@ -103,11 +106,12 @@ public class DirectoresDaoImpl implements DirectoresDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Directores> DevolverDirSinEquipos() {
+	public List<Directores> DevolverDirSinEquipos(long idUsuario) {
 		List<Directores> result = new ArrayList<>();
 		
 		try {
 			Query query = em.createNamedQuery("Directores.findByNoTeam");
+			query.setParameter("idUsuario", idUsuario);			
 			if(query.getResultList().size() != 0)
 				result = query.getResultList();
 			
@@ -120,12 +124,13 @@ public class DirectoresDaoImpl implements DirectoresDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Directores> DevolverAlmostAll(long id) {
+	public List<Directores> DevolverAlmostAll(long id, long idUsuario) {
 		List<Directores> result = new ArrayList<>();
 		
 		try {
 			Query query = em.createNamedQuery("Directores.findAlmostAll");
 			query.setParameter("id", id);
+			query.setParameter("idUsuario", idUsuario);	
 			if(query.getResultList().size() != 0)
 				result = query.getResultList();
 			
@@ -134,6 +139,23 @@ public class DirectoresDaoImpl implements DirectoresDao {
 			
 		}
 				
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Directores> DevolverDirPorUsuario(long idUsuario) {
+		List<Directores> result = new ArrayList<>();
+		
+		try {
+			Query query = em.createNamedQuery("Directores.findByIdUsuario");
+			query.setParameter("idUsuario", idUsuario);
+			if(query.getResultList().size() != 0)
+				result = query.getResultList();
+			
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		
 		return result;
 	}
 

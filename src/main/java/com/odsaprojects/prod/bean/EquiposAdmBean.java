@@ -175,9 +175,12 @@ public class EquiposAdmBean implements Serializable {
 			unEquipo.setAbreviatura(getAbreviatura());
 			unEquipo.setLogo(tempFile.getFileName().toString());
 			unEquipo.setEstado(1);
+			
+			String strVar = String.valueOf(session.get("idUsuario"));
+			Long idUser = Long.valueOf(strVar);
 
-			long var = dir;
-			Directores dirEquipo = dao.BuscarDirectorPorId(var);
+			long idDir = dir;
+			Directores dirEquipo = dao.BuscarDirectorPorId(idDir, idUser);
 			unEquipo.setDirectores(dirEquipo);
 
 			if (daoEquipo.RegistrarEquipo(unEquipo)) {
@@ -225,12 +228,14 @@ public class EquiposAdmBean implements Serializable {
 		}
 				
 		try {
-			Directores dirEquipo = dao.BuscarDirectorPorId(dir);
+			String strVar = String.valueOf(session.get("idUsuario"));
+			Long idUser = Long.valueOf(strVar);
+			Directores dirEquipo = dao.BuscarDirectorPorId(dir, idUser);
 			unEquipo.setDirectores(dirEquipo);
 		
 			if (daoEquipo.RegistrarEquipo(unEquipo)) {
 				if(this.dirAntes != dir) {
-					Directores dirEquipoAntes = dao.BuscarDirectorPorId(dirAntes);
+					Directores dirEquipoAntes = dao.BuscarDirectorPorId(dirAntes, idUser);
 					dirEquipoAntes.setDireqp(0);
 					dao.RegistrarDirector(dirEquipoAntes);
 				}
@@ -253,7 +258,10 @@ public class EquiposAdmBean implements Serializable {
 	public void DevolverEquipos() {
 		daoEquipo = new EquiposDaoImpl();
 		
-		equipList = daoEquipo.DevolverEquipos();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);
+		
+		equipList = daoEquipo.DevolverEquipos(idUser);
 		
 		ListaEquipos();
 	}
@@ -292,8 +300,10 @@ public class EquiposAdmBean implements Serializable {
 		JugadoresDao daoJugador = new JugadoresDaoImpl();
 		Equipos eqp = daoEquipo.BuscarEquiposPorId(this.id);		
 		eqp.setEstado(0);
-		try {	
-			Directores dir = dao.BuscarDirectorPorId(eqp.getDirectores().getId());
+		try {
+			String strVar = String.valueOf(session.get("idUsuario"));
+			Long idUser = Long.valueOf(strVar);
+			Directores dir = dao.BuscarDirectorPorId(eqp.getDirectores().getId(), idUser);
 			if(dir != null) {
 				dir.setDireqp(0);
 				dao.RegistrarDirector(dir);
@@ -314,7 +324,7 @@ public class EquiposAdmBean implements Serializable {
 				}
 			}
 			if(daoEquipo.RegistrarEquipo(eqp)) {
-				equipList = daoEquipo.DevolverEquipos();
+				equipList = daoEquipo.DevolverEquipos(idUser);
 				session.sendMessageToView("Eliminado " + eqp.getNombre());
 			} else {
 				session.sendErrorMessageToView("Error al eliminar el equipo");
@@ -327,7 +337,11 @@ public class EquiposAdmBean implements Serializable {
 	public void BuscarEquipos() {
 		daoEquipo = new EquiposDaoImpl();
 		
-		equipList = daoEquipo.DevolverEquiposNoSinEquipo(0);
+		session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);
+		
+		equipList = daoEquipo.DevolverEquiposNoSinEquipo(0, idUser);
 	}
 	
 	public void BuscarEquipoById(long id) {
@@ -337,9 +351,13 @@ public class EquiposAdmBean implements Serializable {
 	}
 	
 	public void BuscarDirectores() {
-		dao = new DirectoresDaoImpl();		
-		
-		List<Directores> util = dao.DevolverDirSinEquipos();
+		dao = new DirectoresDaoImpl();	
+
+		session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);	
+			
+		List<Directores> util = dao.DevolverDirSinEquipos(idUser);
 		dirs = new HashMap<>();
 		
 		for (Directores directores : util) {

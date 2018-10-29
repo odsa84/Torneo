@@ -26,62 +26,60 @@
 			<b:column span="7" col-sm="5" offset-sm="3" col-md="7" offset="2" styleClass="main">
 				<c:choose>
 					<c:when test="#{directoresAdmBean.director}">
-						<b:panel title="Datos del Director" id="targetPage" look="primary" collapsible="true">
+						<b:panel title="Crear Director" id="targetPage" look="primary" collapsible="true">
 							<h:form styleClass="form-signin" id="mainForm">
 								<h:messages id="createMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
-								<b:container style="">
 									<b:row>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Nombres:" for="nombres" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="nombres" required="true"
 												placeholder="Nombres" value="#{directoresAdmBean.nombres}" />
 										</b:column>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Apellidos:" for="apellidos" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="apellidos" required="true"
 												placeholder="Apellidos" value="#{directoresAdmBean.apellidos}" />
 										</b:column>
 									</b:row>
 									<b:row>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Email:" for="email" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="email" required="true" placeholder="Email"
 												value="#{directoresAdmBean.email}" />
 										</b:column>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Cedula:" for="cedula" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="cedula" required="true" placeholder="cedula"
 												value="#{directoresAdmBean.cedula}" />
 										</b:column>
 									</b:row>
 									<b:row>
-										<b:column medium-screen="1">
+										<b:column medium-screen="2">
 											<h:outputText value="Celular:" for="celular" />
 										</b:column>
-										<b:column medium-screen="3">
+										<b:column medium-screen="4">
 											<b:inputText id="celular" required="true"
 												placeholder="celular" value="#{directoresAdmBean.celular}" />
 										</b:column>
 									</b:row>
 									<b:row>
-										<b:column span="2" offset="2">
+										<b:column span="4" offset="2">
 											<b:commandButton look="primary" action="#{directoresAdmBean.CrearDirector()}" 
 												value="Enviar" style="width: 50%" />
 										</b:column>
-										<b:column span="2" offset="1">
+										<b:column span="4" offset="1">
 											<b:commandButton look="danger" onclick="history.back(); return false;" 
 												value="Cancelar" style="width: 50%" />
 										</b:column>
 									</b:row>
-								</b:container>
 							</h:form>
 						</b:panel>
 					</c:when>
@@ -90,16 +88,16 @@
 					<c:when test="#{directoresAdmBean.listaDirectores}">						
 						<b:panel title="Directores" id="targetPage3" look="primary" collapsible="true">
 							<h:form id="mainForm3">		
-								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />														
+								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />													
 								<b:dataTable value="#{directoresAdmBean.dirList}" var="dir" page-length="10"
-									 row-highlight="true" print="true" excel="true">
+									 row-highlight="true" print="true" excel="true" responsive="true">
 								    <b:dataTableColumn value="#{dir.id}" />
 								    <b:dataTableColumn value="#{dir.nombres}" />
 								    <b:dataTableColumn value="#{dir.apellidos}" />
 								    <b:dataTableColumn value="#{dir.email}"/>
 								    <b:dataTableColumn value="#{dir.cedula}"/>
 								    <b:dataTableColumn value="#{dir.celular}"/>							    						    	    
-							         <b:dataTableColumn label="Operaciones">
+							        <b:dataTableColumn label="Operaciones">
 							            <b:commandButton style="padding: 0 4px;" iconAwesome="pencil" look="link" 
 							            	action="#{directoresAdmBean.LoadEditarDirector(dir)}"/>
 							            <b:commandButton style="padding: 0 4px;" update="@form :modalForm" 
@@ -107,7 +105,7 @@
 							            	oncomplete="$('.modalPseudoClass').modal();return false;" look="link" 
 							            	iconAwesome="trash" />							            	
 							        </b:dataTableColumn>
-								</b:dataTable>															
+								</b:dataTable>													
 							</h:form>
 							<b:modal id="amodal" title="Directores" styleClass="modalPseudoClass">
 							  <p>Por favor!! confirme que desea realizar esta accion... ¿Eliminar director?</p>	

@@ -47,7 +47,7 @@
 									</b:row>
 									<b:row>
 										<b:column span="2">
-											<h:outputText value="FechaInicio:" for="fechaInicio" />
+											<h:outputText value="Fecha de Inicio:" for="fechaInicio" />
 										</b:column>										
 										<b:column span="4">
 											<b:dateTimePicker value="#{campeonatosAdmBean.fechaInicio}"
@@ -57,9 +57,9 @@
 							                    show-icon="true" />
 	      								</b:column>
 										<b:column span="2">
-											<h:outputText value="FechaFin:" for="fechaInicio" />
+											<h:outputText value="Fecha de Fin:" for="fechaInicio" />
 										</b:column>										
-										<b:column span="4">
+										<b:column span="3">
 											<b:dateTimePicker value="#{campeonatosAdmBean.fechaFin}"
 							                    icon-position="right"
 							                    show-date="true"
@@ -88,7 +88,7 @@
 							<h:form id="mainForm3">
 								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
 								<b:dataTable value="#{campeonatosAdmBean.shampList}" var="shamp" page-length="10" 
-									row-highlight="true" print="true" excel="true">
+									row-highlight="true" print="true" excel="true" responsive="true">
 								    <b:dataTableColumn value="#{shamp.id}" />
 								    <b:dataTableColumn value="#{shamp.nombre}" />
 								    <b:dataTableColumn value="#{shamp.cantEquipos}"  label="Cant. Equipos" />

@@ -262,7 +262,10 @@ public class IndexAdmBean implements Serializable {
 		unEquipo.setAbreviatura(getAbreviatura());
 		unEquipo.setLogo(getLogo());
 		
-		Directores dirEquipo = dao.BuscarDirectorPorId(getDir());		
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);
+		
+		Directores dirEquipo = dao.BuscarDirectorPorId(getDir(), idUser);		
 		unEquipo.setDirectores(dirEquipo);
 		
 		if(daoEquipo.RegistrarEquipo(unEquipo)) {

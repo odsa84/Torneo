@@ -5,12 +5,18 @@ package com.odsaprojects.prod.entities;
 //import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,11 +26,18 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "directores")
-@NamedQueries({ @NamedQuery(name = "Directores.findAll", query = "SELECT d FROM Directores d WHERE d.estado = 1"),
-	@NamedQuery(name = "Directores.findByCedula", query = "SELECT d FROM Directores d WHERE d.cedula LIKE :cedula"),
-	@NamedQuery(name = "Directores.findById", query = "SELECT d FROM Directores d WHERE d.id = :id AND d.estado = 1"),
-	@NamedQuery(name = "Directores.findByNoTeam", query = "SELECT d FROM Directores d WHERE d.estado = 1 AND d.direqp = 0"),
-	@NamedQuery(name = "Directores.findAlmostAll", query = "SELECT d FROM Directores d WHERE d.estado = 1 AND d.id != :id")})
+@NamedQueries({ @NamedQuery(name = "Directores.findAll", query = "SELECT d FROM Directores d INNER JOIN d.usuarios u "
+		+ "WHERE u.id = :idUsuario AND d.estado = 1"),
+	@NamedQuery(name = "Directores.findByCedula", query = "SELECT d FROM Directores d INNER JOIN d.usuarios u "
+			+ "WHERE u.id = :idUsuario AND d.cedula LIKE :cedula"),
+	@NamedQuery(name = "Directores.findById", query = "SELECT d FROM Directores d INNER JOIN d.usuarios u "
+			+ "WHERE u.id = :idUsuario AND d.id = :id AND d.estado = 1"),
+	@NamedQuery(name = "Directores.findByNoTeam", query = "SELECT d FROM Directores d INNER JOIN d.usuarios u "
+			+ "WHERE u.id = :idUsuario AND d.estado = 1 AND d.direqp = 0"),
+	@NamedQuery(name = "Directores.findAlmostAll", query = "SELECT d FROM Directores d INNER JOIN d.usuarios u "
+			+ "WHERE u.id = :idUsuario AND d.estado = 1 AND d.id != :id"),
+	@NamedQuery(name = "Directores.findByIdUsuario", query = "SELECT d FROM Directores d INNER JOIN d.usuarios u "
+			+ "WHERE u.id = :idUsuario AND d.estado = 1")})
 public class Directores implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -36,8 +49,10 @@ public class Directores implements Serializable {
 	private String cedula;
 	private int estado;
 	private int direqp;
+	private List<Usuarios> usuarios = new ArrayList<Usuarios>();
 
 	public Directores() {
+		
 	}
 
 	public Directores(String nombres, String apellidos, String celular, String cedula, int estado, int direqp) {
@@ -49,13 +64,14 @@ public class Directores implements Serializable {
 		this.direqp = direqp;
 	}
 
-	public Directores(String nombres, String apellidos, String email, String celular, String cedula, int estado) {
+	public Directores(String nombres, String apellidos, String email, String celular, String cedula, int estado, int direqp, List<Usuarios> usuarios) {
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.celular = celular;
 		this.cedula = cedula;
 		this.estado = estado;
+		this.usuarios = usuarios;
 	}
 
 	@Id
@@ -128,6 +144,23 @@ public class Directores implements Serializable {
 
 	public void setDireqp(int direqp) {
 		this.direqp = direqp;
-	}	
+	}
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "usuarios_directores", joinColumns = {
+	        @JoinColumn(name = "id_directores")}, inverseJoinColumns = {
+	        @JoinColumn(name = "id_usuarios")})
+	public List<Usuarios> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuarios> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	public void addUsuarios(Usuarios user)
+    {
+        this.usuarios.add(user);
+    }
 
 }

@@ -13,7 +13,7 @@ public interface EquiposDao extends Serializable {
 	
 	public boolean RegistrarEquipo(Equipos equipos);
 	
-	public List<Equipos> DevolverEquipos();
+	public List<Equipos> DevolverEquipos(long idUsuario);
 	
 	public Equipos BuscarEquiposPorNombre(String nombre);
 	
@@ -21,7 +21,7 @@ public interface EquiposDao extends Serializable {
 	
 	public Equipos BuscarEquiposPorIdDirector(long idDirector);
 	
-	public List<Equipos> DevolverEquiposNoSinEquipo(long id);
+	public List<Equipos> DevolverEquiposNoSinEquipo(long id, long idUsuario);
 	
 	public void EmRollback();
 	

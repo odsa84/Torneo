@@ -13,14 +13,16 @@ public interface DirectoresDao extends Serializable {
 	
 	public boolean RegistrarDirector(Directores dir);
 	
-	public List<Directores> DevolverDirectores();
+	public List<Directores> DevolverDirectores(long idUsuario);
 	
-	public Directores BuscarDirector(String cedula);
+	public Directores BuscarDirector(String cedula, long idUsuario);
 	
-	public Directores BuscarDirectorPorId(long id);
+	public Directores BuscarDirectorPorId(long id, long idUsuario);
 	
-	public List<Directores> DevolverDirSinEquipos();
+	public List<Directores> DevolverDirSinEquipos(long idUsuario);
 	
-	public List<Directores> DevolverAlmostAll(long id);
+	public List<Directores> DevolverAlmostAll(long id, long idUsuario);
+	
+	public List<Directores> DevolverDirPorUsuario(long idUsuario);
 
 }

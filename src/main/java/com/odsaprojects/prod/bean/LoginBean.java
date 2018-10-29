@@ -51,6 +51,7 @@ public class LoginBean implements Serializable {
 			LimpiarCampos();
 			session.add("usuario", result.getNombre());
 			session.add("idUsuario", result.getId());
+			session.add("objUsuario", result);
 			session.redirectPage("indexAdm.xhtml");
 		}else {
 			

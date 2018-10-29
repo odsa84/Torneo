@@ -1,6 +1,7 @@
 package com.odsaprojects.prod.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class JugadoresAdmBean implements Serializable {
 	private String nombres;
 	private String apellidos;
 	private String cedula;
-	private int edad;
+	private Date fechaNacimiento;
 	private String camiseta;
 	
 	private boolean jugador;	
@@ -104,20 +105,20 @@ public class JugadoresAdmBean implements Serializable {
 		this.cedula = cedula;
 	}
 
-	public int getEdad() {
-		return edad;
-	}
-
-	public void setEdad(int edad) {
-		this.edad = edad;
-	}
-
 	public String getCamiseta() {
 		return camiseta;
 	}
 
 	public void setCamiseta(String camiseta) {
 		this.camiseta = camiseta;
+	}
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public boolean isJugador() {
@@ -195,21 +196,31 @@ public class JugadoresAdmBean implements Serializable {
 	public void BuscarJugadores() {
 		dao = new JugadoresDaoImpl();
 		
-		jugList = dao.DevolverJugadores();
+		session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);
+		
+		jugList = dao.DevolverJugadores(idUser);
 	}
 	
 	public void BuscarEquipos() {
 		daoEquipo = new EquiposDaoImpl();
 		dao = new JugadoresDaoImpl();
 		
-		List<Equipos> util = daoEquipo.DevolverEquipos();
+		session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);
+		
+		List<Equipos> util = daoEquipo.DevolverEquipos(idUser);
 		equips = new HashMap<>();
 		
-		for (Equipos equipos : util) {
-			List<Jugadores> players = dao.BuscarJugadoresPorEquipos(equipos.getId());
-			if(players.size() >= 0 && players.size() < Constantes.PLYBYTEAM) {
-				equips.put(equipos.getNombre() + "(" + equipos.getAbreviatura() + ")", equipos.getId());
-			}			
+		if (util != null) {
+			for (Equipos equipos : util) {
+				List<Jugadores> players = dao.BuscarJugadoresPorEquipos(equipos.getId());
+				if(players.size() >= 0 && players.size() < Constantes.PLYBYTEAM) {
+					equips.put(equipos.getNombre() + "(" + equipos.getAbreviatura() + ")", equipos.getId());
+				}			
+			}
 		}
 	}
 	
@@ -222,7 +233,7 @@ public class JugadoresAdmBean implements Serializable {
 		unJugador.setNombres(getNombres());
 		unJugador.setApellidos(getApellidos());
 		unJugador.setCedula(getCedula());
-		unJugador.setEdad(getEdad());
+		unJugador.setFechaNacimiento(getFechaNacimiento());
 		unJugador.setCamiseta(getCamiseta());
 		unJugador.setEstado(1);
 
@@ -250,7 +261,7 @@ public class JugadoresAdmBean implements Serializable {
 		unJugador.setApellidos(getApellidos());
 		unJugador.setCedula(getCedula());
 		unJugador.setCamiseta(getCamiseta());
-		unJugador.setEdad(getEdad());
+		unJugador.setFechaNacimiento(getFechaNacimiento());
 		unJugador.setEstado(1);
 		
 		try {
@@ -273,7 +284,9 @@ public class JugadoresAdmBean implements Serializable {
 		ply.setEstado(0);
 		try {
 			if(dao.RegistrarJugador(ply)) {
-				jugList = dao.DevolverJugadores();
+				String strVar = String.valueOf(session.get("idUsuario"));
+				Long idUser = Long.valueOf(strVar);
+				jugList = dao.DevolverJugadores(idUser);
 				session.sendMessageToView("Eliminado " + ply.getNombres() + " " + ply.getApellidos());
 			} else {
 				session.sendErrorMessageToView(Constantes.DELETEPLAYERSERROR);
@@ -288,7 +301,7 @@ public class JugadoresAdmBean implements Serializable {
 		setNombres(ply.getNombres());
 		setApellidos(ply.getApellidos());
 		setCedula(ply.getCedula());
-		setEdad(ply.getEdad());
+		setFechaNacimiento(ply.getFechaNacimiento());
 		setCamiseta(ply.getCamiseta());
 		
 		equips.put(ply.getEquipos().getNombre(), ply.getEquipos().getId());
@@ -309,7 +322,7 @@ public class JugadoresAdmBean implements Serializable {
 		setNombres(null);
 		setApellidos(null);
 		setCedula(null);
-		setEdad(0);
+		setFechaNacimiento(null);
 		setCamiseta(null);
 	}
 

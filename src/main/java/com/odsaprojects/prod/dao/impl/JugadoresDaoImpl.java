@@ -50,11 +50,12 @@ public class JugadoresDaoImpl implements JugadoresDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Jugadores> DevolverJugadores() {
+	public List<Jugadores> DevolverJugadores(long idUsuario) {
 		List<Jugadores> result = new ArrayList<>();
 		
 		try {
-			Query query = em.createNamedQuery("Jugadores.findAll");
+			Query query = em.createNamedQuery("Jugadores.findByIdUsuario");
+			query.setParameter("idUsuario", idUsuario);
 			if(query.getResultList().size() != 0) {
 				result = query.getResultList();
 			}
