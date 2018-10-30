@@ -36,9 +36,9 @@ import com.odsaprojects.prod.util.SessionUtils;
 @ViewScoped
 public class CampeonatosAdmBean implements Serializable {
 	
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
-	private static final Logger LOG = Logger.getLogger(EquiposAdmBean.class); 
+	private static final Logger LOG = Logger.getLogger(CampeonatosAdmBean.class); 
 	
 	private Long id;
 	private String nombre;
@@ -270,7 +270,6 @@ private static final long serialVersionUID = 1L;
 		}
 	}
 	
-	
 	/*Funcion para cargar los valores en el formulario de editar*/
 	public void EditarCampeonato(Campeonatos shp) {
 		setId(shp.getId());
@@ -330,6 +329,10 @@ private static final long serialVersionUID = 1L;
 	
 	public void LoadListarCampeonatos() {
 		session.redirectPage("campeonatosAdm.xhtml?shp=0");
+	}
+	
+	public void LoadCalendario(Campeonatos shp) {
+		session.redirectPage("calendarioAdm.xhtml?shp="+shp.getId());
 	}
 	
 	public void DevolverCampeonatos() {

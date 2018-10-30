@@ -100,7 +100,8 @@
 							            <b:commandButton style="padding: 0 4px;" update="@form :modalForm" 
 							            	action="#{campeonatosAdmBean.LoadDeleteCampeonato(shamp)}" 
 							            	oncomplete="$('.modalPseudoClass').modal();return false;" look="link" 
-							            	iconAwesome="trash" />	
+							            	iconAwesome="trash" />
+							            <b:commandButton style="padding: 0 4px;" iconAwesome="calendar" look="link" action="#{campeonatosAdmBean.LoadCalendario(shamp)}"/>	
 							        </b:dataTableColumn>
 								</b:dataTable>
 							</h:form>

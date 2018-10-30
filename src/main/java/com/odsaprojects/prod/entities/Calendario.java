@@ -3,10 +3,15 @@
  */
 package com.odsaprojects.prod.entities;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -34,7 +39,19 @@ public class Calendario implements Serializable {
 	public Calendario() {
 		
 	}
+	
+	public Calendario(Long id, Long equipo1, Long equipo2, Date fechaHoraInicio, Long campeonato, int estado) {
+		this.id = id;
+		this.equipo1 = equipo1;
+		this.equipo2 = equipo2;
+		this.fechaHoraInicio = fechaHoraInicio;
+		this. campeonato = campeonato;
+		this. estado = estado;
+	}
 
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return id;
 	}
@@ -43,6 +60,7 @@ public class Calendario implements Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "equipo1", nullable = false)
 	public Long getEquipo1() {
 		return equipo1;
 	}
@@ -51,6 +69,7 @@ public class Calendario implements Serializable {
 		this.equipo1 = equipo1;
 	}
 
+	@Column(name = "equipo2", nullable = false)
 	public Long getEquipo2() {
 		return equipo2;
 	}
@@ -59,6 +78,7 @@ public class Calendario implements Serializable {
 		this.equipo2 = equipo2;
 	}
 
+	@Column(name = "fechaHoraInicio", nullable = false)
 	public Date getFechaHoraInicio() {
 		return fechaHoraInicio;
 	}
@@ -67,6 +87,7 @@ public class Calendario implements Serializable {
 		this.fechaHoraInicio = fechaHoraInicio;
 	}
 
+	@Column(name = "campeonato", nullable = false)
 	public Long getCampeonato() {
 		return campeonato;
 	}
@@ -75,6 +96,7 @@ public class Calendario implements Serializable {
 		this.campeonato = campeonato;
 	}
 
+	@Column(name = "estado", nullable = false)
 	public int getEstado() {
 		return estado;
 	}

@@ -5,6 +5,8 @@
 		<class>com.odsaprojects.prod.entities.Equipos</class>
 		<class>com.odsaprojects.prod.entities.Directores</class>
 		<class>com.odsaprojects.prod.entities.Jugadores</class>
+		<class>com.odsaprojects.prod.entities.Campeonatos</class>
+		<class>com.odsaprojects.prod.entities.Calendario</class>
 		<properties>
 			<property name="hibernate.ejb.cfgfile" value="hibernate.cfg.xml"/>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
