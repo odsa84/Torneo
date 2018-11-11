@@ -21,5 +21,7 @@ public interface CalendarioDao extends Serializable {
 	public Calendario BuscarCalendarioById(long id);
 	
 	public List<Calendario> BuscarCalendarioByCampeonato(long idCampeonato);
+	
+	public List<Calendario> BuscarEventosPorFecha(int anio, int mes);
 
 }

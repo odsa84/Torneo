@@ -12,6 +12,31 @@
 <h:head>
 	<title>Dashboard Template for BootsFaces</title>
 	<meta name="author" content="Osvaldo D. Sandoval"></meta>
+	<link rel='stylesheet' href='resources/fullcalendar-3.9.0/fullcalendar.css' />
+	<script src='resources/fullcalendar-3.9.0/fullcalendar.js'></script>	
+	<script>	
+		$(document).ready(function() {			
+			$(document).ready(function() {			
+				$.ajax({
+				  url: 'CalendarJsonServlet',
+				  dataType: "json",
+				  success: function(response) {
+					  $('#calendar').fullCalendar({
+						  header: {
+							left: 'prev,next today',
+							center: 'title',
+							right: 'month,agendaWeek,agendaDay'
+						  },
+						  defaultView: 'agendaWeek',
+						  editable: true,
+						  // use "[response]" if only one event
+						  events: response
+					  });
+				  }
+				});
+			});
+		});
+	</script>	
 </h:head>
 <h:body style="padding-top: 60px">
 	<ui:insert name="navBar">
@@ -23,8 +48,64 @@
 				<ui:include src="Templates/leftSideBar.xhtml" />
 			</ui:insert>
 		</b:row>
-		<b:column span="7" col-sm="5" offset-sm="3" col-md="7" offset="2" styleClass="main">
-			<h2>Campeonato: #{calendarioAdmBean.idShp}</h2>
+		<b:column span="8" col-sm="3" offset-sm="1" col-md="3" offset="2" styleClass="main">			
+			<h:form id="mainForm1">
+				<h2>Campeonato: #{calendarioAdmBean.idShp}</h2>
+				<h:messages id="calendarMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
+				<b:commandButton value="Crear eventos" look="primary" style="padding: 0 4px;" update="@form :modalForm" 
+				action="#{calendarioAdmBean.BuscarEquipos()}" oncomplete="$('.modalPseudoClass').modal();return false;" />			
+				<br/><br/>
+			</h:form>
+			<div id="calendar"></div>			
+			<b:modal id="amodal" title="Calendario" styleClass="modalPseudoClass">	
+			  <h:form id="modalForm">
+					<b:row>
+						<b:column medium-screen="3">
+							<h:outputText value="Fecha Inicio" for="fecha de inicio" />
+						</b:column>
+						<b:column span="7">
+							<b:dateTimePicker value="#{calendarioAdmBean.fechaHoraInicio}"
+			                    icon-position="right"
+			                    show-date="true"
+			                    show-time="true"
+			                    show-icon="true"
+			                    colMd="7"
+								labelColMd="7" />
+		                    <br/>
+   						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="3">
+							<h:outputText value="Equipo 1(Local)" for="equipo1" />
+						</b:column>
+						<b:column medium-screen="7">
+							<b:formGroup>
+								<b:selectOneMenu value="#{calendarioAdmBean.equip}" colMd="7"
+									labelColMd="7" tooltip="Seleccione el equipo local" required="true">
+									<f:selectItems value="#{calendarioAdmBean.equips}" />
+								</b:selectOneMenu>
+							</b:formGroup>
+							<br/><br/>
+						</b:column>						
+						<b:column medium-screen="3">
+							<h:outputText value="Equipo 2(Visitante)" for="equipo2" />
+						</b:column>
+						<b:column medium-screen="7">
+							<b:formGroup>
+								<b:selectOneMenu value="#{calendarioAdmBean.equipV}" colMd="7"
+									labelColMd="7" tooltip="Seleccione el equipo visitante" required="true">
+									<f:selectItems value="#{calendarioAdmBean.equipsV}" />
+								</b:selectOneMenu>
+							</b:formGroup>
+							<br/><br/>
+						</b:column>
+					</b:row>
+					<b:commandButton value="Crear" look="primary" action="#{calendarioAdmBean.CrearEvento()}" 
+					    update=":mainForm1" oncomplete="$('.modalPseudoClass').modal('hide');return false;" 
+					    style="margin-left: 30%;" />
+					<b:button value="Cancelar" dismiss="modal" style="margin-left: 10%;" />						  								    			    
+			  </h:form>
+			</b:modal>
 		</b:column>
 	</b:container>
 <style type="text/css">

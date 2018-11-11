@@ -6,11 +6,12 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Dashboard Template for BootsFaces</title>
-	<meta name="author" content="Osvaldo D. Sandoval"></meta>
+	<meta name="author" content="Osvaldo D. Sandoval"></meta>	
 </h:head>
 <h:body style="padding-top: 60px">
 	<ui:insert name="navBar">
@@ -75,12 +76,14 @@
 										<b:column medium-screen="2">
 											<h:outputText value="Equipo" for="equipo" />
 										</b:column>
-										<b:formGroup>
-											<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="4"
-												labelColMd="2" tooltip="Seleccione el equipo" required="true">
-												<f:selectItems value="#{jugadoresAdmBean.equips}" />
-											</b:selectOneMenu>
-										</b:formGroup>
+										<b:column medium-screen="4">
+											<b:formGroup>
+												<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="4"
+													labelColMd="4" tooltip="Seleccione el equipo" required="true">
+													<f:selectItems value="#{jugadoresAdmBean.equips}" />
+												</b:selectOneMenu>
+											</b:formGroup>
+										</b:column>										
 									</b:row>
 									<b:row>
 										<b:column span="4" offset="2">

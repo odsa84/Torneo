@@ -13,60 +13,26 @@
 <h:head></h:head> 
 <h:body>   
        <b:column col-sm="3" col-md="2" styleClass="sidebar">
-           <b:listLinks>
-               <!-- <b:dropMenu value="Players" iconAwesome="fa-male">
-			      <b:navLink value="Listar" href="#"></b:navLink>
-			      <b:navLink value="Crear" href="#"></b:navLink>			      
-			   </b:dropMenu>
-			   <b:dropMenu value="Managers" iconAwesome="birthday-cake">
-			      <b:navLink value="Listar" href="#"></b:navLink>
-			      <b:navLink value="Crear" href="#"></b:navLink>			      
-			   </b:dropMenu>
-			   <b:dropMenu value="Teams" iconAwesome="fa-users">
-			      <b:navLink value="Listar" href="#"></b:navLink>
-			      <b:navLink value="Crear" href="#"></b:navLink>			      
-			   </b:dropMenu>
-			   <b:dropMenu value="Championships" iconAwesome="futbol-o">
-			      <b:navLink value="Listar" href="#"></b:navLink>
-			      <b:navLink value="Crear" href="#"></b:navLink>			      
-			   </b:dropMenu> --> 
-			   
+           <b:listLinks>			   
 			   <b:accordion>
-				  <b:panel id="player" title="Players" iconAwesome="fa-male">
+				  <b:panel id="player" title="Jugadores" iconAwesome="fa-male">
 					  	<b:navCommandLink actionListener="#{indexAdmBean.DevolverJugadores()}" value="Listar" update="" /><br/>
 					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarJugador()}" value="Crear" update=":mainContainer" />
 				  </b:panel>
-				  <b:panel id="manager" title="Managers" iconAwesome="fa-user">
+				  <b:panel id="manager" title="Directores" iconAwesome="fa-user">
 				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverDirectores()}" value="Listar" update=":mainContainer" /><br/>
 					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarDirector()}" value="Crear" update=":mainContainer" />
 				  </b:panel>
-				  <b:panel id="teams" title="Teams" iconAwesome="fa-users">
+				  <b:panel id="teams" title="Equipos" iconAwesome="fa-users">
 				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverEquipos()}" value="Listar" update=":mainContainer" /><br/>
 					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarEquipo()}" value="Crear" update=":mainContainer" />
 				  </b:panel>
-				  <b:panel id="champs" title="Championships" iconAwesome="futbol-o">
+				  <b:panel id="champs" title="Campeonatos" iconAwesome="futbol-o">
 				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverCampeonatos()}" value="Listar" update=":mainContainer" /><br/>
 					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarCampeonato()}" value="Crear" update=":mainContainer" />
 				  </b:panel>
 				</b:accordion>
-				
-				
-      <!-- <b:navCommandLink onclick="ajax:navLinkBean.navigateToPage(1, 'b:navCommandLink')"
-                        value=" Page 2 (NavCommandLink)" update="**:targetPage" /> -->
            </b:listLinks>
-           
-           <!-- <b:listLinks>
-               <b:navLink value="Nav item" />
-               <b:navLink value="Nav item again" />
-               <b:navLink value="One more nav" />
-               <b:navLink value="Another nav item" />
-               <b:navLink value="More navigation" />
-           </b:listLinks>
-           <b:listLinks>
-               <b:navLink value="Nav item again" />
-               <b:navLink value="One more nav" />
-               <b:navLink value="Another nav item" />
-           </b:listLinks> -->
        </b:column>                 
 </h:body> 
 </html>

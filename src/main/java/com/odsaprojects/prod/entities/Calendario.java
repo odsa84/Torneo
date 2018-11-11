@@ -24,7 +24,10 @@ import javax.persistence.Table;
 @Table(name = "calendario")
 @NamedQueries({ @NamedQuery(name = "calendario.findAll", query = "SELECT c FROM Calendario c WHERE c.estado = 1"),
 	@NamedQuery(name = "calendario.findById", query = "SELECT c FROM Calendario c WHERE c.id = :id AND c.estado = 1"),
-	@NamedQuery(name = "calendario.findByIdCampeonato", query = "SELECT c FROM Calendario c WHERE c.campeonato = :idCampeonato AND c.estado = 1")})
+	@NamedQuery(name = "calendario.findByIdCampeonato", query = "SELECT c FROM Calendario c WHERE c.campeonato = :idCampeonato "
+			+ "AND c.estado = 1"),
+	@NamedQuery(name = "calendario.findByMonthAndYear", query = "SELECT c FROM Calendario c WHERE MONTH(c.fechaHoraInicio) = :mes "
+			+ "AND YEAR(c.fechaHoraInicio) = :anio")})
 public class Calendario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,6 +36,7 @@ public class Calendario implements Serializable {
 	private Long equipo1;
 	private Long equipo2;
 	private Date fechaHoraInicio;
+	private Date fechaHoraFin;
 	private Long campeonato;
 	private int estado;
 
@@ -40,11 +44,12 @@ public class Calendario implements Serializable {
 		
 	}
 	
-	public Calendario(Long id, Long equipo1, Long equipo2, Date fechaHoraInicio, Long campeonato, int estado) {
+	public Calendario(Long id, Long equipo1, Long equipo2, Date fechaHoraInicio, Date fechaHoraFin, Long campeonato, int estado) {
 		this.id = id;
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
 		this.fechaHoraInicio = fechaHoraInicio;
+		this.fechaHoraFin = fechaHoraFin;
 		this. campeonato = campeonato;
 		this. estado = estado;
 	}
@@ -85,6 +90,15 @@ public class Calendario implements Serializable {
 
 	public void setFechaHoraInicio(Date fechaHoraInicio) {
 		this.fechaHoraInicio = fechaHoraInicio;
+	}
+	
+	@Column(name = "fechaHoraFin", nullable = false)
+	public Date getFechaHoraFin() {
+		return fechaHoraFin;
+	}
+
+	public void setFechaHoraFin(Date fechaHoraFin) {
+		this.fechaHoraFin = fechaHoraFin;
 	}
 
 	@Column(name = "campeonato", nullable = false)

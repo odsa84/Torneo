@@ -82,7 +82,7 @@
 							<h:form id="mainForm3">
 								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
 								<b:dataTable value="#{equiposAdmBean.equipList}" var="equip" page-length="10" 
-									row-highlight="true" print="true" excel="true">
+									row-highlight="true" print="true" excel="true" responsive="true">
 								    <b:dataTableColumn value="#{equip.id}" />
 								    <b:dataTableColumn label="Logo" style="width:10%">
 								    	<b:image small-screen="three-fourths" value="/resources/imagenes/Logo_Real_Madrid.svg-9142616941137012645.png" tooltip="small-screen='one-fourth'"/>

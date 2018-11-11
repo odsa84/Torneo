@@ -97,5 +97,23 @@ public class CalendarioDaoImpl implements CalendarioDao {
 		
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Calendario> BuscarEventosPorFecha(int anio, int mes) {
+		List<Calendario> result = null;
+		
+		try {
+			Query query = em.createNamedQuery("calendario.findByMonthAndYear");
+			query.setParameter("mes", mes);
+			query.setParameter("anio", anio);
+			if (query.getResultList().size() != 0) {
+				result = query.getResultList();
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		
+		return result;
+	}
 
 }
