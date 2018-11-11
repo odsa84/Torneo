@@ -328,6 +328,10 @@ public class IndexAdmBean implements Serializable {
 		session.redirectPage("campeonatosAdm.xhtml?shp=1");
 	}
 	
+	public void SeleccionarEventos() {
+		session.redirectPage("eventosAdm.xhtml");
+	}
+	
 	public void ListaDirectores() {
 		this.director = false;
 		this.jugador = false;

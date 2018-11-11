@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.event.Event;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,37 +38,17 @@ public class CalendarJsonServlet extends HttpServlet {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		List l = new ArrayList();
 		 
-		/* CalendarDTO c = new CalendarDTO();
-		 c.setId(1);
-		 c.setStart("2018-11-07 08:00:00");
-		 c.setEnd("2018-11-07 09:30:00");
-		 c.setTitle("Task in Progress Dia 7");
-		 
-		 CalendarDTO d = new CalendarDTO();
-		 d.setId(2);
-		 d.setStart("2018-11-07 09:45:00");
-		 d.setEnd("2018-11-07 11:15:00");
-		 d.setTitle("Task in Progress Dia 7");
-		 
-		 l.add(c);
-		 l.add(d);*/
-		 
 		 EquiposDao daoEquipo = new EquiposDaoImpl();
-			
-		//String month = request.getParameter("month");
-		//String year = request.getParameter("year");
-		
-        //List<Event> events = new ArrayList<Event>();
-		
-                // skipped code ....
 
         CalendarioDao dao = new CalendarioDaoImpl();
-		//ArrayList<Calendario> listCalendario = (ArrayList<Calendario>) dao.BuscarEventosPorFecha(Integer.parseInt(year), Integer.parseInt(month));
-        //List<Calendario> listCal = dao.BuscarEventosPorFecha(Integer.parseInt(year), Integer.parseInt(month));
-        List<Calendario> listCal = dao.DevolverCalendario();
+        
+        String var = request.getParameter("shamp");
+        
+		Long idShamp = Long.parseLong(var);
+		
+        List<Calendario> listCal = dao.BuscarCalendarioByCampeonato(idShamp);
         
         CalendarDTO c;
         
@@ -88,21 +67,11 @@ public class CalendarJsonServlet extends HttpServlet {
         		l.add(c);
         	}
         }
-			
-                // convert "apps" to "events"		
-		
-		/*String json = new Gson().toJson(events);
-		
-		
-		// Write JSON string.
+		 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(json);*/
-		 
-		 response.setContentType("application/json");
-		 response.setCharacterEncoding("UTF-8");
-		 PrintWriter out = response.getWriter();
-		 out.write(new Gson().toJson(l));
+		PrintWriter out = response.getWriter();
+		out.write(new Gson().toJson(l));
 	}
 
 	/**

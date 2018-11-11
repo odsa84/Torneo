@@ -29,7 +29,8 @@
 				  </b:panel>
 				  <b:panel id="champs" title="Campeonatos" iconAwesome="futbol-o">
 				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverCampeonatos()}" value="Listar" update=":mainContainer" /><br/>
-					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarCampeonato()}" value="Crear" update=":mainContainer" />
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarCampeonato()}" value="Crear" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarEventos()}" value="Eventos" update=":mainContainer" />
 				  </b:panel>
 				</b:accordion>
            </b:listLinks>
