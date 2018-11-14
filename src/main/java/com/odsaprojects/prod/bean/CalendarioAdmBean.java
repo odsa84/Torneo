@@ -4,6 +4,7 @@
 package com.odsaprojects.prod.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +20,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.odsaprojects.prod.dao.CalendarioDao;
 import com.odsaprojects.prod.dao.CampeonatosDao;
 import com.odsaprojects.prod.dao.EquiposDao;
@@ -29,6 +32,7 @@ import com.odsaprojects.prod.entities.Calendario;
 import com.odsaprojects.prod.entities.Campeonatos;
 import com.odsaprojects.prod.entities.Equipos;
 import com.odsaprojects.prod.util.Constantes;
+import com.odsaprojects.prod.util.EventoDTO;
 import com.odsaprojects.prod.util.SessionUtils;
 
 /**
@@ -41,6 +45,8 @@ public class CalendarioAdmBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	private static final Logger LOG = Logger.getLogger(CalendarioAdmBean.class); 
+	
 	private Long id;
 	private Long equipo1;
 	private Long equipo2;
@@ -49,6 +55,7 @@ public class CalendarioAdmBean implements Serializable {
 	private Long campeonato;
 	private int estado;
 	
+	private List<EventoDTO> eventoList;
 	private List<Calendario> calendarioList;
 	
 	private int equip;
@@ -56,10 +63,10 @@ public class CalendarioAdmBean implements Serializable {
 	private int equipV;
 	private Map<String, Long> equipsV;
 	
+	private Boolean disabled;
+	
 	private long idShp;
 	private String nombreShp;
-	private String nombreEquipo1;
-	private String nombreEquipo2;
 	
 	private CampeonatosDao daoCampeonatos;
 	private EquiposDao daoEquipo;
@@ -74,10 +81,15 @@ public class CalendarioAdmBean implements Serializable {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		Map params = ec.getRequestParameterMap();
 		aux = (String) params.get("shp");
+		this.disabled = false;
+		
+		dao = new CalendarioDaoImpl();		
 		
 		if (aux != null) {
 			this.setIdShp(Long.valueOf(aux));								
 			BuscarCampeonato(Long.parseLong(aux));
+			
+			BuscarEventosPorCampeonato(Long.parseLong(aux));
 		}else {
 			BuscarCalendarios();
 		}
@@ -139,6 +151,14 @@ public class CalendarioAdmBean implements Serializable {
 		this.estado = estado;
 	}
 
+	public List<EventoDTO> getEventoList() {
+		return eventoList;
+	}
+
+	public void setEventoList(List<EventoDTO> eventoList) {
+		this.eventoList = eventoList;
+	}
+
 	public List<Calendario> getCalendarioList() {
 		return calendarioList;
 	}
@@ -179,6 +199,14 @@ public class CalendarioAdmBean implements Serializable {
 		this.equipsV = equipsV;
 	}
 
+	public Boolean getDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(Boolean disabled) {
+		this.disabled = disabled;
+	}
+
 	public long getIdShp() {
 		return idShp;
 	}
@@ -193,22 +221,6 @@ public class CalendarioAdmBean implements Serializable {
 
 	public void setNombreShp(String nombreShp) {
 		this.nombreShp = nombreShp;
-	}
-
-	public String getNombreEquipo1() {
-		return nombreEquipo1;
-	}
-
-	public void setNombreEquipo1(String nombreEquipo1) {
-		this.nombreEquipo1 = nombreEquipo1;
-	}
-
-	public String getNombreEquipo2() {
-		return nombreEquipo2;
-	}
-
-	public void setNombreEquipo2(String nombreEquipo2) {
-		this.nombreEquipo2 = nombreEquipo2;
 	}
 
 	public void CrearEvento() {
@@ -248,15 +260,33 @@ public class CalendarioAdmBean implements Serializable {
 		
 	}
 	
-	public void DeleteCaendario() {
+	public void DeleteEvento() {
+		dao = new CalendarioDaoImpl();		
+		Calendario unCalendario = dao.BuscarCalendarioById(getId());
 		
+		unCalendario.setEstado(0);
+		
+		try {		
+			
+			if (dao.RegistrarCalendario(unCalendario)) {				
+				session.sendMessageToView(Constantes.DELETECALENDARSUCCESS);
+				this.disabled = true;
+				
+				//ActualizarCalendar();
+			} else {
+				session.sendErrorMessageToView(Constantes.DELETECALENDARERROR);
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage());
+			session.sendErrorMessageToView(e.getMessage());
+		}
 	}
 	
 	public void BuscarCalendarios() {
 		dao = new CalendarioDaoImpl();
 		
-		List<Calendario> util = dao.DevolverCalendario();
-		calendarioList = util;
+		calendarioList = dao.DevolverCalendario();
+
 	}
 	
 	public void BuscarEquipos() {
@@ -276,7 +306,7 @@ public class CalendarioAdmBean implements Serializable {
 				equipsV.put(equipos.getNombre() + "(" + equipos.getAbreviatura() + ")", equipos.getId());
 			}
 		}
-	}
+	}	
 	
 	public void ActualizarCalendar() {
 		session.redirectPage("calendarioAdm.xhtml?shp="+getIdShp());
@@ -311,6 +341,51 @@ public class CalendarioAdmBean implements Serializable {
 		if (unCampeonato != null) {
 			setNombreShp(unCampeonato.getNombre());
 		}
+	}
+	
+	public void BuscarEventosPorCampeonato(long aux) {
+		dao = new CalendarioDaoImpl();
+		
+		List<Calendario> util = dao.BuscarCalendarioByCampeonato(Long.valueOf(aux));
+		
+		List<Equipos> listUtil = DevolverlistaEquipos();
+		
+		EventoDTO eDto;
+		
+		eventoList = new ArrayList<EventoDTO>();
+		
+		if(util.size() != 0) {
+			for (Calendario cal: util) {
+				eDto = new EventoDTO();
+				for (Equipos eqp: listUtil) {
+					if (eqp.getId() == cal.getEquipo1()) {
+						eDto.setId(cal.getId());
+						eDto.setNombreEquipo1(eqp.getNombre());
+						eDto.setFechaHoraInicio(cal.getFechaHoraInicio());
+						eDto.setFechaHoraFin(cal.getFechaHoraFin());
+					} else if (eqp.getId() == cal.getEquipo2()) {
+						eDto.setId(cal.getId());
+						eDto.setNombreEquipo2(eqp.getNombre());
+						eDto.setFechaHoraInicio(cal.getFechaHoraInicio());
+						eDto.setFechaHoraFin(cal.getFechaHoraFin());
+					}
+				}
+				eDto.setNombreCampeonato(nombreShp);
+				eventoList.add(eDto);
+			}			
+		}
+	}
+	
+	public List<Equipos> DevolverlistaEquipos() {
+		daoEquipo = new EquiposDaoImpl();
+
+		session = new SessionUtils();
+		String strVar = String.valueOf(session.get("idUsuario"));
+		Long idUser = Long.valueOf(strVar);
+		
+		List<Equipos> util = daoEquipo.DevolverEquipos(idUser);
+		
+		return util;
 	}
 	
 	public void LoadDeleteCalendario(Calendario cal) {

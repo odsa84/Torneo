@@ -38,7 +38,6 @@ public class Equipos implements Serializable {
 	private String abreviatura;
 	private String logo;
 	private int estado;
-//	private List<Jugadores> jugadores;
 
 	public Equipos() {
 	}

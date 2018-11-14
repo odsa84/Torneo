@@ -3,6 +3,7 @@
  */
 package com.odsaprojects.prod.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -52,7 +53,7 @@ public class EquiposDaoImpl implements EquiposDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Equipos> DevolverEquipos(long idUsuario) {
-		List<Equipos> result = null;
+		List<Equipos> result = new ArrayList<Equipos>();
 		
 		try {
 			Query query = em.createNamedQuery("Equipos.findByIdUsuario");
@@ -68,7 +69,7 @@ public class EquiposDaoImpl implements EquiposDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Equipos> DevolverEquiposNoSinEquipo(long id, long idUsuario) {
-		List<Equipos> result = null;
+		List<Equipos> result = new ArrayList<Equipos>();
 		
 		try {
 			Query query = em.createNamedQuery("Equipos.findAllNoSinEquipo");

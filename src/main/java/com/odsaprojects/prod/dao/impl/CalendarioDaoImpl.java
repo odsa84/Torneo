@@ -3,6 +3,7 @@
  */
 package com.odsaprojects.prod.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -83,7 +84,7 @@ public class CalendarioDaoImpl implements CalendarioDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Calendario> BuscarCalendarioByCampeonato(long idCampeonato){
-		List<Calendario> result = null;
+		List<Calendario> result = new ArrayList<Calendario>();
 		
 		try {
 			Query query = em.createNamedQuery("calendario.findByIdCampeonato");
@@ -100,7 +101,7 @@ public class CalendarioDaoImpl implements CalendarioDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<Calendario> BuscarEventosPorFecha(int anio, int mes) {
-		List<Calendario> result = null;
+		List<Calendario> result = new ArrayList<Calendario>();
 		
 		try {
 			Query query = em.createNamedQuery("calendario.findByMonthAndYear");

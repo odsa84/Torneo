@@ -44,6 +44,8 @@ public final class Constantes {
 	public static final String NEWCALENDARSUCCESS = "Creado el calendario ";
 	public static final String NEWCALENDARSAMETEAM = "No puede seleccionar el mismo equipo como Local y como Visitante"; 
 	public static final String NEWCALENDARERROR = "Error al crear el Calendario";
+	public static final String DELETECALENDARSUCCESS = "Eliminado el evento.";
+	public static final String DELETECALENDARERROR = "eError al eliminar el evento";
 	
 	
 

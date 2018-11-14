@@ -23,8 +23,10 @@ import javax.persistence.Table;
 @Table(name = "campeonatos")
 @NamedQueries({ @NamedQuery(name = "Campeonatos.findAll", query = "SELECT c FROM Campeonatos c WHERE c.estado = 1"),
 	@NamedQuery(name = "Campeonatos.findById", query = "SELECT c FROM Campeonatos c WHERE c.id = :id AND c.estado = 1"),
-	@NamedQuery(name = "Campeonatos.findByUsuario", query = "SELECT c FROM Campeonatos c WHERE c.usuario.id = :idUsuario AND c.estado = 1"),
-	@NamedQuery(name = "Campeonatos.findByIdCampeonato", query = "SELECT c FROM Campeonatos c WHERE c.idCampeonato = :idCampeonato AND c.estado = 1")})
+	@NamedQuery(name = "Campeonatos.findByUsuario", query = "SELECT c FROM Campeonatos c WHERE c.usuario.id = :idUsuario "
+			+ "AND c.estado = 1"),
+	@NamedQuery(name = "Campeonatos.findByIdCampeonato", query = "SELECT c FROM Campeonatos c WHERE c.idCampeonato = :idCampeonato "
+			+ "AND c.estado = 1")})
 public class Campeonatos implements Serializable {
 
 	private static final long serialVersionUID = 1L;

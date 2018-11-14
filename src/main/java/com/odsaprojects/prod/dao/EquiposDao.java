@@ -23,6 +23,7 @@ public interface EquiposDao extends Serializable {
 	
 	public List<Equipos> DevolverEquiposNoSinEquipo(long id, long idUsuario);
 	
+	
 	public void EmRollback();
 	
 	public void EmClose();

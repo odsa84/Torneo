@@ -20,7 +20,7 @@
 				$.ajax({
 				  url: 'CalendarJsonServlet',
 				  dataType: 'json',
-				  data: 'shamp='+document.getElementById('mainForm1:inputId').value,
+				  data: 'shamp='+document.getElementById('mainForm1:inputId').value,				  
 				  success: function(response) {
 					  $('#calendar').fullCalendar({
 						  header: {
@@ -30,10 +30,18 @@
 						  },
 						  defaultView: 'agendaWeek',
 						  editable: true,
-						  // use "[response]" if only one event
-						  events: response
+						  events: response,
+						  eventClick: function(calEvent, jsEvent, view) {
+							    var stime = calEvent.start.format('DD/MM/YYYY, h:mm a');
+                				var etime = calEvent.end.format('DD/MM/YYYY, h:mm a');
+							    $('#eventTitle').html(calEvent.title),
+							    document.getElementById("modalForm2:eventId").value = calEvent.id;
+					            $('#eventInicio').html(stime),
+					            $('#eventFin').html(etime),
+					            $('#deleteModal').modal();
+						  }
 					  });
-				  }
+				  	}
 				});
 			});
 		});
@@ -54,7 +62,9 @@
 				<h:inputText id="inputId" value="#{calendarioAdmBean.idShp}" style="display:none"/>
 				<h2>Campeonato: #{calendarioAdmBean.nombreShp}</h2>				
 				<b:commandButton value="Crear eventos" look="success" style="padding: 0 4px;" update="@form :modalForm" 
-				action="#{calendarioAdmBean.BuscarEquipos()}" oncomplete="$('.modalPseudoClass').modal();return false;" />			
+				action="#{calendarioAdmBean.BuscarEquipos()}" oncomplete="$('#amodal').modal();return false;" />	
+				<b:button value="Mostrar eventos" look="primary" style="padding: 0 4px; margin-left: 2%;"
+				onclick="$('#amodal1').modal();tableWidgetVar.DataTable().responsive.recalc();" />					
 				<br/><br/>
 			</h:form>
 			<h:form id="calendarForm">
@@ -109,7 +119,54 @@
 				    update=":modalForm" style="margin-left: 30%;" />
 				<b:commandButton value="Salir" look="danger" action="#{calendarioAdmBean.ActualizarCalendar()}" dismiss="modal" style="margin-left: 10%;" />					  								    			    
 			  </h:form>
-			</b:modal>			
+			</b:modal>	
+			
+			<b:modal id="amodal1" title="Eventos" styleClass="modalPseudoClass">	
+				<h:form id="mainForm3">
+					<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
+					<b:dataTable value="#{calendarioAdmBean.eventoList}" var="calendario" page-length="5" 
+						row-highlight="true" print="true" excel="true" responsive="true" widgetVar="tableWidgetVar">
+					    <b:dataTableColumn value="#{calendario.id}" />
+					    <b:dataTableColumn value="#{calendario.nombreEquipo1}" label="Equipo Local" />
+					    <b:dataTableColumn value="#{calendario.nombreEquipo2}"  label="Equipo Visita" />
+					    <b:dataTableColumn value="#{calendario.fechaHoraInicio}" label="Inicia" />
+					    <b:dataTableColumn value="#{calendario.fechaHoraFin}" label="Termina" />
+					    <b:dataTableColumn value="#{calendario.nombreCampeonato}" label="Campeonato" />
+					</b:dataTable>
+				</h:form>				  								    			    
+			</b:modal>
+			
+			<b:modal id="deleteModal" title="Desea eliminar el Evento:" closable="false" close-on-escape="false"
+			backdrop="false">	
+			  <h5 id="eventTitle" class="modal-title" style="margin-left: 30%;"></h5>			  
+			  <h:form id="modalForm2">
+			  	  <h:messages id="calendarMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
+			  	  <h:inputText id="eventId" value="#{calendarioAdmBean.id}" name="eventIdInput" style="display:none"/><br/>
+				  <b:row style="margin-left: 15%;">
+					<b:column medium-screen="4">
+						<h:outputText value="Fecha de Inicio:" for="fecha de inicio" />
+					</b:column>
+					<b:column span="4">
+						<h5 id="eventInicio" class="modal-title"></h5>
+						</b:column>
+				  </b:row>
+				  <b:row style="margin-left: 15%;">
+					<b:column medium-screen="4">
+						<h:outputText value="Fecha de Fin:" for="fecha de inicio" />
+					</b:column>
+					<b:column span="4">
+						<h5 id="eventFin" class="modal-title"></h5>
+						<br/>
+	 				</b:column>	 				
+				  </b:row>				
+				  <b:commandButton value="Eliminar" look="primary" action="#{calendarioAdmBean.DeleteEvento()}" 
+				    update=":modalForm2" style="margin-left: 30%;" disabled="#{calendarioAdmBean.disabled}" >
+				    <f:param id="even" name="eventId" value="" />
+				  </b:commandButton>
+				  <b:commandButton value="Salir" look="danger" action="#{calendarioAdmBean.ActualizarCalendar()}" dismiss="modal" style="margin-left: 10%;" />					  								    			    
+			</h:form>
+			</b:modal>
+					
 		</b:column>
 	</b:container>
 <style type="text/css">

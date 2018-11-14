@@ -39,8 +39,9 @@ public class CalendarJsonServlet extends HttpServlet {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List l = new ArrayList();
+		//List<Calendario> listCal = new ArrayList<Calendario>();
 		 
-		 EquiposDao daoEquipo = new EquiposDaoImpl();
+		EquiposDao daoEquipo = new EquiposDaoImpl();
 
         CalendarioDao dao = new CalendarioDaoImpl();
         
@@ -48,9 +49,9 @@ public class CalendarJsonServlet extends HttpServlet {
         
 		Long idShamp = Long.parseLong(var);
 		
-        List<Calendario> listCal = dao.BuscarCalendarioByCampeonato(idShamp);
+		List<Calendario> listCal = dao.BuscarCalendarioByCampeonato(idShamp);
         
-        CalendarDTO c;
+        CalendarDTO c = new CalendarDTO();
         
         if(listCal.size() > 0) {        	
         	for (Calendario cal : listCal) {
