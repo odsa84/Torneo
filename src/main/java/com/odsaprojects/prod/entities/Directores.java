@@ -148,8 +148,7 @@ public class Directores implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "usuarios_directores", joinColumns = {
-	        @JoinColumn(name = "id_directores")}, inverseJoinColumns = {
-	        @JoinColumn(name = "id_usuarios")})
+	        @JoinColumn(name = "id_directores")}, inverseJoinColumns = {@JoinColumn(name = "id_usuarios")})
 	public List<Usuarios> getUsuarios() {
 		return usuarios;
 	}

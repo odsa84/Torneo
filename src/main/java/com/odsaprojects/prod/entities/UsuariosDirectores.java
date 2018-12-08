@@ -68,7 +68,4 @@ public class UsuariosDirectores implements Serializable {
 	public void setId_directores(Long id_directores) {
 		this.id_directores = id_directores;
 	}
-	
-	
-
 }
