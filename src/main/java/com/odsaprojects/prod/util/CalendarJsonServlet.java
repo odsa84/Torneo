@@ -39,7 +39,6 @@ public class CalendarJsonServlet extends HttpServlet {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List l = new ArrayList();
-		//List<Calendario> listCal = new ArrayList<Calendario>();
 		 
 		EquiposDao daoEquipo = new EquiposDaoImpl();
 

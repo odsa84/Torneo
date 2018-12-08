@@ -14,6 +14,7 @@
 	<meta name="author" content="Osvaldo D. Sandoval"></meta>
 	<link rel='stylesheet' href='resources/fullcalendar-3.9.0/fullcalendar.css' />
 	<script src='resources/fullcalendar-3.9.0/fullcalendar.js'></script>	
+	<script src='resources/fullcalendar-3.9.0/locale/es.js'></script>
 	<script>	
 		$(document).ready(function() {			
 			$(document).ready(function() {			
@@ -37,10 +38,12 @@
 							    $('#eventTitle').html(calEvent.title),
 							    document.getElementById("modalForm2:eventId").value = calEvent.id;
 					            $('#eventInicio').html(stime),
+					            $()
 					            $('#eventFin').html(etime),
 					            $('#deleteModal').modal();
 						  }
 					  });
+					  $('#calendar').fullCalendar('gotoDate', document.getElementById('mainForm1:inputDateTime').value);					  
 				  	}
 				});
 			});
@@ -60,6 +63,7 @@
 		<b:column span="8" col-sm="3" offset-sm="1" col-md="3" offset="2" styleClass="main">			
 			<h:form id="mainForm1">
 				<h:inputText id="inputId" value="#{calendarioAdmBean.idShp}" style="display:none"/>
+				<h:inputText id="inputDateTime" value="#{calendarioAdmBean.lastDateTime}" style="display:none"/>
 				<h2>Campeonato: #{calendarioAdmBean.nombreShp}</h2>				
 				<b:commandButton value="Crear eventos" look="success" style="padding: 0 4px;" update="@form :modalForm" 
 				action="#{calendarioAdmBean.BuscarEquipos()}" oncomplete="$('#amodal').modal();return false;" />	
@@ -137,7 +141,7 @@
 			</b:modal>
 			
 			<b:modal id="deleteModal" title="Desea eliminar el Evento:" closable="false" close-on-escape="false"
-			backdrop="false">	
+				backdrop="false">	
 			  <h5 id="eventTitle" class="modal-title" style="margin-left: 30%;"></h5>			  
 			  <h:form id="modalForm2">
 			  	  <h:messages id="calendarMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
@@ -148,11 +152,12 @@
 					</b:column>
 					<b:column span="4">
 						<h5 id="eventInicio" class="modal-title"></h5>
+						<h:inputText id="eventFechaInicio" value="" name="eventFechaInicioInput" style="display:none"/>
 						</b:column>
 				  </b:row>
 				  <b:row style="margin-left: 15%;">
 					<b:column medium-screen="4">
-						<h:outputText value="Fecha de Fin:" for="fecha de inicio" />
+						<h:outputText value="Fecha de Fin:" for="fecha de inicio" />						
 					</b:column>
 					<b:column span="4">
 						<h5 id="eventFin" class="modal-title"></h5>

@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class CalendarioAdmBean implements Serializable {
 	private Date fechaHoraFin;
 	private Long campeonato;
 	private int estado;
+	private Date lastDateTime;
 	
 	private List<EventoDTO> eventoList;
 	private List<Calendario> calendarioList;
@@ -149,6 +151,14 @@ public class CalendarioAdmBean implements Serializable {
 
 	public void setEstado(int estado) {
 		this.estado = estado;
+	}
+
+	public Date getLastDateTime() {
+		return lastDateTime;
+	}
+
+	public void setLastDateTime(Date lastDateTime) {
+		this.lastDateTime = lastDateTime;
 	}
 
 	public List<EventoDTO> getEventoList() {
@@ -272,7 +282,6 @@ public class CalendarioAdmBean implements Serializable {
 				session.sendMessageToView(Constantes.DELETECALENDARSUCCESS);
 				this.disabled = true;
 				
-				//ActualizarCalendar();
 			} else {
 				session.sendErrorMessageToView(Constantes.DELETECALENDARERROR);
 			}
@@ -309,7 +318,7 @@ public class CalendarioAdmBean implements Serializable {
 	}	
 	
 	public void ActualizarCalendar() {
-		session.redirectPage("calendarioAdm.xhtml?shp="+getIdShp());
+		session.redirectPage("calendarioAdm.xhtml?shp="+getIdShp()+"&event");
 	}
 	
 	//Invocar Servlet pasandole un atributo - no se utiliza
@@ -372,8 +381,23 @@ public class CalendarioAdmBean implements Serializable {
 				}
 				eDto.setNombreCampeonato(nombreShp);
 				eventoList.add(eDto);
-			}			
+			}
+			
+			ObtenerUltimaFechaHora(eventoList);
 		}
+	}
+	
+	public void ObtenerUltimaFechaHora(List<EventoDTO> lst) {
+		Calendar myCalendar = new GregorianCalendar(1900, 1, 1);
+		Date lastDate = myCalendar.getTime();
+		
+		for (EventoDTO eDto: lst) {
+			if (eDto.getFechaHoraInicio().compareTo(lastDate) > 0) {
+				lastDate = eDto.getFechaHoraInicio();
+			}
+		}
+		
+		this.lastDateTime = lastDate;
 	}
 	
 	public List<Equipos> DevolverlistaEquipos() {
