@@ -16,6 +16,8 @@ public interface CalendarioDao extends Serializable {
 	
 	public boolean RegistrarCalendario(Calendario calendario);
 	
+	public boolean ActualizarEstadoEnCeroListaCalendario(List<Calendario> calList);
+	
 	public List<Calendario> DevolverCalendario();
 	
 	public Calendario BuscarCalendarioById(long id);
@@ -23,5 +25,7 @@ public interface CalendarioDao extends Serializable {
 	public List<Calendario> BuscarCalendarioByCampeonato(long idCampeonato);
 	
 	public List<Calendario> BuscarEventosPorFecha(int anio, int mes);
+	
+	public List<Calendario> BuscarCalendarioByEquipo(long idEqp);
 
 }

@@ -11,29 +11,114 @@
 
 <ft:trace />
 <h:head></h:head> 
-<h:body>   
-       <b:column col-sm="3" col-md="2" styleClass="sidebar">
-           <b:listLinks>			   
+
+<h:body> 
+	<b:row>  
+	<!-- visible="xs,sm,md,lg" -->
+       <b:column col-xs="12" col-sm="3" col-md="2" styleClass="sidebar">
+           <b:listLinks styleClass="navbar-sidebar">			   
 			   <b:accordion>
 				  <b:panel id="player" title="Jugadores" iconAwesome="fa-male">
-					  	<b:navCommandLink actionListener="#{indexAdmBean.DevolverJugadores()}" value="Listar" update="" /><br/>
-					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarJugador()}" value="Crear" update=":mainContainer" />
+					  	<b:navCommandLink actionListener="#{indexAdmBean.DevolverJugadores()}" value="Listar" ajax="true" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarJugador()}" value="Crear" ajax="true" update=":mainContainer" />
 				  </b:panel>
 				  <b:panel id="manager" title="Directores" iconAwesome="fa-user">
-				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverDirectores()}" value="Listar" update=":mainContainer" /><br/>
-					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarDirector()}" value="Crear" update=":mainContainer" />
+				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverDirectores()}" value="Listar" ajax="true" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarDirector()}" value="Crear" ajax="true" update=":mainContainer" />
 				  </b:panel>
 				  <b:panel id="teams" title="Equipos" iconAwesome="fa-users">
-				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverEquipos()}" value="Listar" update=":mainContainer" /><br/>
-					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarEquipo()}" value="Crear" update=":mainContainer" />
+				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverEquipos()}" value="Listar" ajax="true" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarEquipo()}" value="Crear" ajax="true" update=":mainContainer" />
 				  </b:panel>
 				  <b:panel id="champs" title="Campeonatos" iconAwesome="futbol-o">
-				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverCampeonatos()}" value="Listar" update=":mainContainer" /><br/>
-					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarCampeonato()}" value="Crear" update=":mainContainer" /><br/>
-					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarEventos()}" value="Eventos" update=":mainContainer" />
+				  		<b:navCommandLink actionListener="#{indexAdmBean.DevolverCampeonatos()}" value="Listar" ajax="true" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarCampeonato()}" value="Crear" ajax="true" update=":mainContainer" /><br/>
+					  	<b:navCommandLink actionListener="#{indexAdmBean.SeleccionarEventos()}" value="Eventos" ajax="true" update=":mainContainer" />
 				  </b:panel>
 				</b:accordion>
            </b:listLinks>
-       </b:column>                 
+       </b:column> 
+      </b:row>
+      
+      <style type="text/css">
+        .sub-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .navbar-fixed-top {
+            border: 0 none;
+        }
+
+        .sidebar {
+            background-color: #f5f5f5;
+            border-right: 1px solid #eee;
+            bottom: 0;
+            display: block;
+            left: 0;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 20px;
+            position: fixed;
+            top: 51px;
+            z-index: 1000;
+        }
+        .nav-list {
+            margin-bottom: 20px;
+            margin-left: -20px;
+            margin-right: -21px;
+        }
+        .nav-list > li > a {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .nav-list > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
+            background-color: #428bca;
+            color: #fff;
+        }
+        .main {
+            padding: 20px;
+        }
+        @media (min-width: 768px) {
+        .main {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        }
+        .main .page-header {
+            margin-top: 0;
+        }
+        .placeholders {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .placeholders h4 {
+            margin-bottom: 0;
+        }
+        .placeholder {
+            margin-bottom: 20px;
+        }
+        .placeholder img {
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+		ul.navbar-sidebar>li a[data-toggle].collapsed:before {
+			    content: "\f105";
+			    margin-left: 2px;
+			    margin-right: 7px;
+			}
+		ul.navbar-sidebar>li a[data-toggle]:before {
+		    content: "\f107";
+		    font-family: FontAwesome;
+		    margin-right: 5px;
+		    vertical-align: 0;
+	    }
+	    ul.navbar-sidebar>li >ul > li > a {
+	    		padding-top:2px;
+	    		padding-bottom:2px;
+	    		margin-left:1.5em;
+	    		font-size:90%;
+	    	}
+        </style>                
 </h:body> 
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -6,8 +6,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:b="http://bootsfaces.net/ui"
-    xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Dashboard Template for BootsFaces</title>
@@ -22,61 +21,66 @@
 			<ui:insert name="sideBar">
 				<ui:include src="Templates/leftSideBar.xhtml" />
 			</ui:insert>
-			<b:column span="7" col-sm="5" offset-sm="3" col-md="7" offset="2" styleClass="main">				
+			<b:column span="7" col-sm="5" offset-sm="3" col-md="7" offset="2"
+				styleClass="main">
 				<c:choose>
 					<c:when test="#{campeonatosAdmBean.campeonatos}">
-						<b:panel title="Crear Campeonato" id="targetPage2" look="primary" collapsible="true">
-							<h:form enctype="multipart/form-data" styleClass="form-signin" id="mainForm2">
-								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
-								<!-- <b:container col-sm="5" offset-sm="3" col-md="3" offset="2"> -->									
-									<b:row>
-										<b:column span="2">
-											<h:outputText value="Nombre:" for="nombre" />
-										</b:column>
-										<b:column span="4">
-											<b:inputText id="nombre" required="true"
-												placeholder="Nombre" value="#{campeonatosAdmBean.nombre}" />
-										</b:column>
-										<b:column span="2">
-											<h:outputText value="Cant. de Equipos:" for="cantEquipos" />
-										</b:column>
-										<b:column span="3">
-											<b:inputText id="cantEquipos" required="false"
-												placeholder="cantidad de equipos" value="#{campeonatosAdmBean.cantEquipos}" />
-										</b:column>
-									</b:row>
-									<b:row>
-										<b:column span="2">
-											<h:outputText value="Fecha de Inicio:" for="fechaInicio" />
-										</b:column>										
-										<b:column span="4">
-											<b:dateTimePicker value="#{campeonatosAdmBean.fechaInicio}"
-							                    icon-position="right"
-							                    show-date="true"
-							                    show-time="false"
-							                    show-icon="true" />
-	      								</b:column>
-										<b:column span="2">
-											<h:outputText value="Fecha de Fin:" for="fechaInicio" />
-										</b:column>										
-										<b:column span="3">
-											<b:dateTimePicker value="#{campeonatosAdmBean.fechaFin}"
-							                    icon-position="right"
-							                    show-date="true"
-							                    show-time="false"
-							                    show-icon="true" />
-	      								</b:column>
-									</b:row>
-									<br/>
-									<br/>
-									<b:row>
-										<b:column span="3" offset="2">
-											<b:commandButton look="primary" action="#{campeonatosAdmBean.CrearCampeonato()}" value="Enviar" style="width: 50%" />
-										</b:column>
-										<b:column span="3" offset="1">
-											<b:commandButton look="danger" onclick="history.back(); return false;" value="Cancelar" style="width: 50%" />
-										</b:column>
-									</b:row>									
+						<b:panel title="Crear Campeonato" id="targetPage2" look="primary"
+							collapsible="true">
+							<h:form enctype="multipart/form-data" styleClass="form-signin"
+								id="mainForm2">
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
+								<!-- <b:container col-sm="5" offset-sm="3" col-md="3" offset="2"> -->
+								<b:row>
+									<b:column span="2">
+										<h:outputText value="Nombre:" for="nombre" />
+									</b:column>
+									<b:column span="4">
+										<b:inputText id="nombre" required="true" placeholder="Nombre"
+											value="#{campeonatosAdmBean.nombre}" />
+									</b:column>
+									<b:column span="2">
+										<h:outputText value="Cant. de Equipos:" for="cantEquipos" />
+									</b:column>
+									<b:column span="3">
+										<b:inputText id="cantEquipos" required="false"
+											placeholder="cantidad de equipos"
+											value="#{campeonatosAdmBean.cantEquipos}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column span="2">
+										<h:outputText value="Fecha de Inicio:" for="fechaInicio" />
+									</b:column>
+									<b:column span="4">
+										<b:dateTimePicker value="#{campeonatosAdmBean.fechaInicio}"
+											icon-position="right" show-date="true" show-time="false"
+											show-icon="true" />
+									</b:column>
+									<b:column span="2">
+										<h:outputText value="Fecha de Fin:" for="fechaInicio" />
+									</b:column>
+									<b:column span="3">
+										<b:dateTimePicker value="#{campeonatosAdmBean.fechaFin}"
+											icon-position="right" show-date="true" show-time="false"
+											show-icon="true" />
+									</b:column>
+								</b:row>
+								<br />
+								<br />
+								<b:row>
+									<b:column span="3" offset="2">
+										<b:commandButton look="primary"
+											action="#{campeonatosAdmBean.CrearCampeonato()}"
+											value="Enviar" style="width: 50%" />
+									</b:column>
+									<b:column span="3" offset="1">
+										<b:commandButton look="danger"
+											actionListener="#{campeonatosAdmBean.LoadListarCampeonatos()}"
+											immediate="true" value="Salir" style="width: 50%" />
+									</b:column>
+								</b:row>
 								<!-- </b:container> -->
 							</h:form>
 						</b:panel>
@@ -84,95 +88,116 @@
 				</c:choose>
 				<c:choose>
 					<c:when test="#{campeonatosAdmBean.listaCampeonatos}">
-						<b:panel title="Campeonatos" id="targetPage3" look="primary" collapsible="true">
+						<b:panel title="Campeonatos" id="targetPage3" look="primary"
+							collapsible="true">
 							<h:form id="mainForm3">
-								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
-								<b:dataTable value="#{campeonatosAdmBean.shampList}" var="shamp" page-length="10" 
-									row-highlight="true" print="true" excel="true" responsive="true">
-								    <b:dataTableColumn value="#{shamp.id}" />
-								    <b:dataTableColumn value="#{shamp.nombre}" />
-								    <b:dataTableColumn value="#{shamp.cantEquipos}"  label="Cant. Equipos" />
-								    <b:dataTableColumn value="#{shamp.fechaInicio}" label="Inicia" />
-								    <b:dataTableColumn value="#{shamp.fechaFin}" label="Termina" />
-								    <b:dataTableColumn value="#{shamp.usuario.nombre} #{shamp.usuario.apellidos}" label="Administrador" />								    						    	    
-							        <b:dataTableColumn label="Operaciones">
-							            <b:commandButton style="padding: 0 4px;" iconAwesome="pencil" look="link" action="#{campeonatosAdmBean.EditarCampeonato(shamp)}"/>			            
-							            <b:commandButton style="padding: 0 4px;" update="@form :modalForm" 
-							            	action="#{campeonatosAdmBean.LoadDeleteCampeonato(shamp)}" 
-							            	oncomplete="$('.modalPseudoClass').modal();return false;" look="link" 
-							            	iconAwesome="trash" />
-							            <b:commandButton style="padding: 0 4px;" iconAwesome="calendar" look="link" action="#{campeonatosAdmBean.LoadCalendario(shamp)}"/>	
-							        </b:dataTableColumn>
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
+								<b:dataTable value="#{campeonatosAdmBean.shampList}" var="shamp"
+									page-length="10" row-highlight="true" print="true" excel="true"
+									responsive="true">
+									<b:dataTableColumn value="#{shamp.id}" />
+									<b:dataTableColumn value="#{shamp.nombre}" />
+									<b:dataTableColumn value="#{shamp.cantEquipos}"
+										label="Cant. Equipos" />
+									<b:dataTableColumn value="#{shamp.fechaInicio}" label="Inicia" />
+									<b:dataTableColumn value="#{shamp.fechaFin}" label="Termina" />
+									<b:dataTableColumn
+										value="#{shamp.usuario.nombre} #{shamp.usuario.apellidos}"
+										label="Administrador" />
+									<b:dataTableColumn label="Operaciones">
+										<b:commandButton style="padding: 0 4px;" iconAwesome="pencil"
+											look="link"
+											action="#{campeonatosAdmBean.EditarCampeonato(shamp.id)}" />
+										<b:commandButton style="padding: 0 4px;"
+											update="@form :modalForm"
+											action="#{campeonatosAdmBean.LoadDeleteCampeonato(shamp)}"
+											oncomplete="$('.modalPseudoClass').modal();return false;"
+											look="link" iconAwesome="trash" />
+										<b:commandButton style="padding: 0 4px;"
+											iconAwesome="calendar" look="link"
+											action="#{campeonatosAdmBean.LoadCalendario(shamp.id)}" />
+									</b:dataTableColumn>
 								</b:dataTable>
 							</h:form>
-							<b:modal id="amodal" title="Campeonatos" styleClass="modalPseudoClass">
-							  <p>Por favor!! confirme que desea realizar esta accion... ¿Eliminar campeonato?</p>	
-							  <h:form id="modalForm">							  								    
-							    <b:commandButton value="Eliminar" look="primary" action="#{campeonatosAdmBean.DeleteCampeonato()}" 
-								    update=":mainForm3" oncomplete="$('.modalPseudoClass').modal('hide');return false;" />
-								<b:button value="Cancelar" dismiss="modal" style="margin-left: 10%;" />
-							  </h:form>
+							<b:modal id="amodal" title="Campeonatos"
+								styleClass="modalPseudoClass">
+								<p>Por favor!! confirme que desea realizar esta accion...
+									¿Eliminar campeonato?</p>
+								<h:form id="modalForm">
+									<b:commandButton value="Eliminar" look="primary"
+										action="#{campeonatosAdmBean.DeleteCampeonato()}"
+										update=":mainForm3"
+										oncomplete="$('.modalPseudoClass').modal('hide');return false;" />
+									<b:button value="Cancelar" dismiss="modal"
+										style="margin-left: 10%;" />
+								</h:form>
 							</b:modal>
 						</b:panel>
 					</c:when>
 				</c:choose>
 				<c:choose>
 					<c:when test="#{campeonatosAdmBean.editarCampeonatos}">
-						<b:panel title="Editar Campeonato" id="targetPage2" look="primary" collapsible="true">
-							<h:form enctype="multipart/form-data" styleClass="form-signin" id="mainForm2">
-								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />								
-									<b:row>
-										<b:column span="2">
-											<h:outputText value="Nombre:" for="nombre" />
-										</b:column>
-										<b:column span="4">
-											<b:inputText id="nombre" required="true" value="#{campeonatosAdmBean.nombre}" />
-										</b:column>	
-										<b:column span="2">
-											<h:outputText value="Cant. Equipos:" for="cantEquipos" />
-										</b:column>
-										<b:column span="3">
-											<b:inputText id="cantEquipos" required="true" value="#{campeonatosAdmBean.cantEquipos}" />
-										</b:column>									
-									</b:row>
-									<b:row>									
-										<b:column span="2">
-											<h:outputText value="FechaInicio:" for="fechaInicio" />
-										</b:column>										
-										<b:column span="4">
-											<b:dateTimePicker value="#{campeonatosAdmBean.fechaInicio}"
-							                    icon-position="right"
-							                    show-date="true"
-							                    show-time="false"
-							                    show-icon="true" />
-	      								</b:column>
-										<b:column span="2">
-											<h:outputText value="FechaFin:" for="fechaInicio" />
-										</b:column>										
-										<b:column span="4">
-											<b:dateTimePicker value="#{campeonatosAdmBean.fechaFin}"
-							                    icon-position="right"
-							                    show-date="true"
-							                    show-time="false"
-							                    show-icon="true" />
-	      								</b:column>
-									</b:row>
-									<br/>
-									<br/>
-									<b:row>
-										<b:column span="3" offset="2">
-											<b:commandButton look="primary" action="#{campeonatosAdmBean.EditarShamps()}" value="Actualizar" style="width: 50%" />											
-										</b:column>
-										<b:column span="3" offset="1">
-											<b:commandButton look="danger" action="#{campeonatosAdmBean.LoadListarCampeonatos()}" value="Cancelar" style="width: 50%" />
-										</b:column>
-									</b:row>
+						<b:panel title="Editar Campeonato" id="targetPage2" look="primary"
+							collapsible="true">
+							<h:form enctype="multipart/form-data" styleClass="form-signin"
+								id="mainForm2">
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
+								<b:row>
+									<b:column span="2">
+										<h:outputText value="Nombre:" for="nombre" />
+									</b:column>
+									<b:column span="4">
+										<b:inputText id="nombre" required="true"
+											value="#{campeonatosAdmBean.nombre}" />
+									</b:column>
+									<b:column span="2">
+										<h:outputText value="Cant. Equipos:" for="cantEquipos" />
+									</b:column>
+									<b:column span="3">
+										<b:inputText id="cantEquipos" required="true"
+											value="#{campeonatosAdmBean.cantEquipos}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column span="2">
+										<h:outputText value="FechaInicio:" for="fechaInicio" />
+									</b:column>
+									<b:column span="4">
+										<b:dateTimePicker value="#{campeonatosAdmBean.fechaInicio}"
+											icon-position="right" show-date="true" show-time="false"
+											show-icon="true" />
+									</b:column>
+									<b:column span="2">
+										<h:outputText value="FechaFin:" for="fechaInicio" />
+									</b:column>
+									<b:column span="4">
+										<b:dateTimePicker value="#{campeonatosAdmBean.fechaFin}"
+											icon-position="right" show-date="true" show-time="false"
+											show-icon="true" />
+									</b:column>
+								</b:row>
+								<br />
+								<br />
+								<b:row>
+									<b:column span="3" offset="2">
+										<b:commandButton look="primary"
+											action="#{campeonatosAdmBean.EditarShamps()}"
+											value="Actualizar" style="width: 50%" />
+									</b:column>
+									<b:column span="3" offset="1">
+										<b:commandButton look="danger"
+											action="#{campeonatosAdmBean.LoadListarCampeonatos()}" immediate="true"
+											value="Salir" style="width: 50%" />
+									</b:column>
+								</b:row>
 							</h:form>
 						</b:panel>
 					</c:when>
 				</c:choose>
 			</b:column>
-			<b:column style="width: 25%; padding: 20px;">	
+			<b:column style="width: 25%; padding: 20px;">
 				<ui:insert name="auspBar">
 					<ui:include src="Templates/auspBar.xhtml" />
 				</ui:insert>

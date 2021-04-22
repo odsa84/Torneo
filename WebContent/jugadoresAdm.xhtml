@@ -6,12 +6,11 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Dashboard Template for BootsFaces</title>
-	<meta name="author" content="Osvaldo D. Sandoval"></meta>	
+	<meta name="author" content="Osvaldo D. Sandoval"></meta>
 </h:head>
 <h:body style="padding-top: 60px">
 	<ui:insert name="navBar">
@@ -22,77 +21,78 @@
 			<ui:insert name="sideBar">
 				<ui:include src="Templates/leftSideBar.xhtml" />
 			</ui:insert>
-			<b:column col-sm="5" offset-sm="3" col-md="7" offset="2" styleClass="main">	
+			<b:column col-sm="5" offset-sm="3" col-md="7" offset="2"
+				styleClass="main">
 				<c:choose>
 					<c:when test="#{jugadoresAdmBean.jugador}">
 						<b:panel title="Crear Jugador" id="targetPage2" look="primary"
 							collapsible="true">
 							<h:form styleClass="form-signin" id="mainForm2">
-								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />								
-									<b:row>
-										<b:column medium-screen="2">
-											<h:outputText value="Nombres" for="nombres" />
-										</b:column>
-										<b:column medium-screen="4">
-											<b:inputText id="nombres" required="true"
-												placeholder="Nombres" value="#{jugadoresAdmBean.nombres}" />
-										</b:column>
-										<b:column medium-screen="2">
-											<h:outputText value="Apellidos" for="apellidos" />
-										</b:column>
-										<b:column medium-screen="4">
-											<b:inputText id="apellidos" required="true" placeholder="Apellidos"
-												value="#{jugadoresAdmBean.apellidos}" />
-										</b:column>
-									</b:row>
-									<b:row>
-										<b:column medium-screen="2">
-											<h:outputText value="CI/Pasaporte" for="ci/pasaporte" />
-										</b:column>
-										<b:column medium-screen="4">
-											<b:inputText id="identificacion" required="true"
-												placeholder="CI/Pasaporte"
-												value="#{jugadoresAdmBean.cedula}" />
-										</b:column>
-										<b:column medium-screen="2">
-											<h:outputText value="Fecha de Nac." for="fecha de nacimiento" />
-										</b:column>
-										<b:column span="4">
-											<b:dateTimePicker value="#{jugadoresAdmBean.fechaNacimiento}"
-							                    icon-position="right"
-							                    show-date="true"
-							                    show-time="false"
-							                    show-icon="true" />
-	      								</b:column>
-									</b:row>
-									<b:row>
-										<b:column medium-screen="2">
-											<h:outputText value="Numero" for="numero" />
-										</b:column>
-										<b:column medium-screen="4">
-											<b:inputText id="numero" required="true" placeholder="Numero"
-												value="#{jugadoresAdmBean.camiseta}" />
-										</b:column>
-										<b:column medium-screen="2">
-											<h:outputText value="Equipo" for="equipo" />
-										</b:column>
-										<b:column medium-screen="4">
-											<b:formGroup>
-												<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="4"
-													labelColMd="4" tooltip="Seleccione el equipo" required="true">
-													<f:selectItems value="#{jugadoresAdmBean.equips}" />
-												</b:selectOneMenu>
-											</b:formGroup>
-										</b:column>										
-									</b:row>
-									<b:row>
-										<b:column span="4" offset="2">
-											<b:commandButton look="primary btn-block" action="#{jugadoresAdmBean.Crearjugador()}" value="Enviar" style="width: 50%"/>
-										</b:column>
-										<b:column span="4" offset="1">
-											<b:commandButton look="danger" onclick="history.back(); return false;" value="Cancelar" style="width: 50%" />
-										</b:column>
-									</b:row>
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
+								<b:row>
+									<b:column medium-screen="2">
+										<h:outputText value="Nombres" for="nombres" />
+									</b:column>
+									<b:column medium-screen="4">
+										<b:inputText id="nombres" required="true"
+											placeholder="Nombres" value="#{jugadoresAdmBean.nombres}" />
+									</b:column>
+									<b:column medium-screen="2">
+										<h:outputText value="Apellidos" for="apellidos" />
+									</b:column>
+									<b:column medium-screen="4">
+										<b:inputText id="apellidos" required="true"
+											placeholder="Apellidos" value="#{jugadoresAdmBean.apellidos}" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column medium-screen="2">
+										<h:outputText value="CI/Pasaporte" for="ci/pasaporte" />
+									</b:column>
+									<b:column medium-screen="4">
+										<b:inputText id="identificacion" required="true"
+											placeholder="CI/Pasaporte" value="#{jugadoresAdmBean.cedula}" />
+									</b:column>
+									<b:column medium-screen="2">
+										<h:outputText value="Fecha de Nac." for="fecha de nacimiento" />
+									</b:column>
+									<b:column span="4">
+										<b:dateTimePicker value="#{jugadoresAdmBean.fechaNacimiento}"
+											icon-position="right" show-date="true" show-time="false"
+											show-icon="true" />
+									</b:column>
+								</b:row>
+								<b:row>
+									<b:column medium-screen="2">
+										<h:outputText value="Numero" for="numero" />
+									</b:column>
+									<b:column medium-screen="4">
+										<b:inputText id="numero" required="true" placeholder="Numero"
+											value="#{jugadoresAdmBean.camiseta}" />
+									</b:column>
+									<b:column medium-screen="2">
+										<h:outputText value="Equipo" for="equipo" />
+									</b:column>
+									<b:formGroup>
+										<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="4"
+											labelColMd="4" tooltip="Seleccione el equipo" required="true">
+											<f:selectItems value="#{jugadoresAdmBean.equips}" />
+										</b:selectOneMenu>
+									</b:formGroup>
+								</b:row>
+								<b:row>
+									<b:column span="4" offset="2">
+										<b:commandButton look="primary btn-block"
+											action="#{jugadoresAdmBean.Crearjugador()}" value="Enviar"
+											style="width: 50%" />
+									</b:column>
+									<b:column span="4" offset="1">
+										<b:commandButton look="danger"
+											actionListener="#{jugadoresAdmBean.LoadListarJugadores()}"
+											immediate="true" value="Salir" style="width: 50%" />
+									</b:column>
+								</b:row>
 							</h:form>
 						</b:panel>
 					</c:when>
@@ -102,40 +102,52 @@
 						<b:panel title="Jugadores" id="targetPage3" look="primary"
 							collapsible="true">
 							<h:form id="mainForm3">
-								<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
 								<b:dataTable value="#{jugadoresAdmBean.jugList}" var="ply"
 									page-length="10" row-highlight="true" responsive="true">
 									<b:dataTableColumn value="#{ply.camiseta}" label="Numero" />
 									<b:dataTableColumn value="#{ply.nombres}" />
 									<b:dataTableColumn value="#{ply.apellidos}" />
 									<b:dataTableColumn value="#{ply.cedula}" />
-									<b:dataTableColumn value="#{ply.equipos.nombre} (#{ply.equipos.abreviatura})" label="Equipo" />
+									<b:dataTableColumn
+										value="#{ply.equipos.nombre} (#{ply.equipos.abreviatura})"
+										label="Equipo" />
 									<b:dataTableColumn label="Operaciones">
-							            <b:commandButton style="padding: 0 4px;" iconAwesome="pencil" look="link" action="#{jugadoresAdmBean.LoadEditarJugador(ply)}"/>			            
-							            <b:commandButton style="padding: 0 4px;" update="@form :modalForm" 
-							            	action="#{jugadoresAdmBean.LoadDeleteJugador(ply)}" 
-							            	oncomplete="$('.modalPseudoClass').modal();return false;" look="link" 
-							            	iconAwesome="trash" />
-							        </b:dataTableColumn>
+										<b:commandButton style="padding: 0 4px;" iconAwesome="pencil"
+											look="link"
+											action="#{jugadoresAdmBean.LoadEditarJugador(ply)}" />
+										<b:commandButton style="padding: 0 4px;"
+											update="@form :modalForm"
+											action="#{jugadoresAdmBean.LoadDeleteJugador(ply)}"
+											oncomplete="$('.modalPseudoClass').modal();return false;"
+											look="link" iconAwesome="trash" />
+									</b:dataTableColumn>
 								</b:dataTable>
 							</h:form>
-							<b:modal id="amodal" title="Jugadores" styleClass="modalPseudoClass">
-							  <p>Por favor!! confirme que desea realizar esta accion... ¿Eliminar jugador?</p>
-							  <h:form id="modalForm">							  								    
-							    <b:commandButton value="Eliminar" look="primary" action="#{jugadoresAdmBean.DeleteJugador()}" 
-								    update=":mainForm3" oncomplete="$('.modalPseudoClass').modal('hide');return false;" />
-								<b:button value="Cancelar" dismiss="modal" />
-							  </h:form>
+							<b:modal id="amodal" title="Jugadores"
+								styleClass="modalPseudoClass">
+								<p>Por favor!! confirme que desea realizar esta accion...
+									¿Eliminar jugador?</p>
+								<h:form id="modalForm">
+									<b:commandButton value="Eliminar" look="primary"
+										action="#{jugadoresAdmBean.DeleteJugador()}"
+										update=":mainForm3"
+										oncomplete="$('.modalPseudoClass').modal('hide');return false;" />
+									<b:button value="Cancelar" dismiss="modal" />
+								</h:form>
 							</b:modal>
 						</b:panel>
 					</c:when>
 				</c:choose>
 				<c:choose>
 					<c:when test="#{jugadoresAdmBean.editarJugador}">
-						<b:panel title="Editar Jugador" id="targetPage2" look="primary" collapsible="true">
+						<b:panel title="Editar Jugador" id="targetPage2" look="primary"
+							collapsible="true">
 							<h:form styleClass="form-signin" id="mainForm2">
-							<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
-								<b:container style="">									
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
+								<b:container style="">
 									<b:row>
 										<b:column medium-screen="1">
 											<h:outputText value="Nombres" for="nombres" />
@@ -148,7 +160,9 @@
 											<h:outputText value="Apellidos" for="apellidos" />
 										</b:column>
 										<b:column medium-screen="3">
-											<b:inputText id="apellidos" required="true" placeholder="Apellidos" value="#{jugadoresAdmBean.apellidos}" />
+											<b:inputText id="apellidos" required="true"
+												placeholder="Apellidos"
+												value="#{jugadoresAdmBean.apellidos}" />
 										</b:column>
 									</b:row>
 									<b:row>
@@ -156,41 +170,48 @@
 											<h:outputText value="CI/Pasaporte" for="ci/pasaporte" />
 										</b:column>
 										<b:column medium-screen="3">
-											<b:inputText id="identificacion" required="true" placeholder="CI/Pasaporte" value="#{jugadoresAdmBean.cedula}" />
+											<b:inputText id="identificacion" required="true"
+												placeholder="CI/Pasaporte"
+												value="#{jugadoresAdmBean.cedula}" />
 										</b:column>
 										<b:column medium-screen="2">
 											<h:outputText value="Fecha de Nac." for="fecha de nacimiento" />
 										</b:column>
 										<b:column span="4">
 											<b:dateTimePicker value="#{jugadoresAdmBean.fechaNacimiento}"
-							                    icon-position="right"
-							                    show-date="true"
-							                    show-time="false"
-							                    show-icon="true" />
-	      								</b:column>
+												icon-position="right" show-date="true" show-time="false"
+												show-icon="true" />
+										</b:column>
 									</b:row>
 									<b:row>
 										<b:column medium-screen="1">
 											<h:outputText value="Numero" for="numero" />
 										</b:column>
 										<b:column medium-screen="3">
-											<b:inputText id="numero" required="true" placeholder="Numero" value="#{jugadoresAdmBean.camiseta}" />
+											<b:inputText id="numero" required="true" placeholder="Numero"
+												value="#{jugadoresAdmBean.camiseta}" />
 										</b:column>
 										<b:column medium-screen="1">
 											<h:outputText value="Equipo" for="equipo" />
 										</b:column>
 										<b:formGroup>
-											<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="2" labelColMd="2" tooltip="Seleccione el equipo" required="true">
+											<b:selectOneMenu value="#{jugadoresAdmBean.equip}" colMd="2"
+												labelColMd="2" tooltip="Seleccione el equipo"
+												required="true">
 												<f:selectItems value="#{jugadoresAdmBean.equips}" />
 											</b:selectOneMenu>
 										</b:formGroup>
 									</b:row>
 									<b:row>
 										<b:column span="2" offset="2">
-											<b:commandButton look="primary btn-block" action="#{jugadoresAdmBean.EditarJugador()}" value="Actualizar" style="width: 50%" />
+											<b:commandButton look="primary btn-block"
+												action="#{jugadoresAdmBean.EditarJugador()}"
+												value="Actualizar" style="width: 50%" />
 										</b:column>
 										<b:column span="2" offset="1">
-											<b:commandButton look="danger" onclick="history.back(); return false;" value="Cancelar" style="width: 50%" />
+											<b:commandButton look="danger"
+												actionListener="#{jugadoresAdmBean.LoadListarJugadores()}"
+												immediate="true" value="Salir" style="width: 50%" />
 										</b:column>
 									</b:row>
 								</b:container>
@@ -198,7 +219,7 @@
 						</b:panel>
 					</c:when>
 				</c:choose>
-			</b:column>.<b:column style="width: 25%; padding: 20px;">	
+			</b:column>.<b:column style="width: 25%; padding: 20px;">
 				<ui:insert name="auspBar">
 					<ui:include src="Templates/auspBar.xhtml" />
 				</ui:insert>
@@ -315,6 +336,7 @@
 .ui-fileupload-buttonbar .ui-fileupload-cancel {
 	display: none;
 }
+
 .info, .success, .warning, .error, .validation {
 	border: 0px solid;
 	margin: 10px 0px;

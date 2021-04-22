@@ -331,8 +331,8 @@ public class CampeonatosAdmBean implements Serializable {
 		session.redirectPage("campeonatosAdm.xhtml?shp=0");
 	}
 	
-	public void LoadCalendario(Campeonatos shp) {
-		session.redirectPage("calendarioAdm.xhtml?shp="+shp.getId());
+	public void LoadCalendario(long id) {
+		session.redirectPage("calendarioAdm.xhtml?shp="+id);
 	}
 	
 	public void DevolverCampeonatos() {

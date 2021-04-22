@@ -12,10 +12,12 @@ import javax.validation.constraints.NotNull;
 
 import com.odsaprojects.prod.dao.DirectoresDao;
 import com.odsaprojects.prod.dao.EquiposDao;
+import com.odsaprojects.prod.dao.JugadoresDao;
 import com.odsaprojects.prod.dao.impl.DirectoresDaoImpl;
 import com.odsaprojects.prod.dao.impl.EquiposDaoImpl;
 import com.odsaprojects.prod.entities.Directores;
 import com.odsaprojects.prod.entities.Equipos;
+import com.odsaprojects.prod.entities.Jugadores;
 import com.odsaprojects.prod.util.SessionUtils;
 
 /**
@@ -52,6 +54,11 @@ public class IndexAdmBean implements Serializable {
 	private List<Directores> dirList;
 	private List<Equipos> equipList;
 	
+	private List<Jugadores> jugadores;
+	private List<Jugadores> selectedJugadores;
+	
+	private String color[]=new String[]{"Red", "Yellow", "Blue"};
+	
 	@NotNull
 	private int dir;
 	private Map<String, Long> dirs;
@@ -59,12 +66,29 @@ public class IndexAdmBean implements Serializable {
 	@Inject
 	SessionUtils session;
 	
+	private JugadoresDao daoJugadores;
+	
 	@ManagedProperty(value="#{equiposAdmBean}")
 	private EquiposAdmBean eab;
 
-	public IndexAdmBean() {
-		
+	@Inject
+	public IndexAdmBean(JugadoresDao daoJugadores) {
+		this.daoJugadores = daoJugadores;
+		jugadores = daoJugadores.BuscarJugadoresPorEquipos((long) 23);
 	}
+	
+	public void JugadorSeleccionado() {
+		Jugadores jug = selectedJugadores.get(0);
+		System.out.println(jug.getNombres());
+	}
+	
+	public String[] getColor() {
+	 return color;
+	 }
+	 
+	 public void setColor(String[] color) {
+	 this.color = color;
+	 }
 
 	public String getNombres() {
 		return nombres;
@@ -374,6 +398,30 @@ public class IndexAdmBean implements Serializable {
 		this.listaEquipos = false;
 		this.listaJugadores = false;
 		this.listaCampeonatos = true;
+	}
+
+	public JugadoresDao getDaoJugadores() {
+		return daoJugadores;
+	}
+
+	public void setDaoJugadores(JugadoresDao daoJugadores) {
+		this.daoJugadores = daoJugadores;
+	}
+
+	public List<Jugadores> getJugadores() {
+		return jugadores;
+	}
+
+	public void setJugadores(List<Jugadores> jugadores) {
+		this.jugadores = jugadores;
+	}
+
+	public List<Jugadores> getSelectedJugadores() {
+		return selectedJugadores;
+	}
+
+	public void setSelectedJugadores(List<Jugadores> selectedJugadores) {
+		this.selectedJugadores = selectedJugadores;
 	}
 
 }

@@ -13,6 +13,8 @@ public interface EquiposDao extends Serializable {
 	
 	public boolean RegistrarEquipo(Equipos equipos);
 	
+	public boolean ActualizarEquipo(Equipos equipos);
+	
 	public List<Equipos> DevolverEquipos(long idUsuario);
 	
 	public Equipos BuscarEquiposPorNombre(String nombre);

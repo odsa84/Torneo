@@ -9,12 +9,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import com.odsaprojects.prod.dao.DirectoresDao;
 import com.odsaprojects.prod.dao.EquiposDao;
-import com.odsaprojects.prod.dao.UsuariosDao;
 import com.odsaprojects.prod.dao.impl.DirectoresDaoImpl;
 import com.odsaprojects.prod.dao.impl.EquiposDaoImpl;
-import com.odsaprojects.prod.dao.impl.UsuariosDaoImpl;
 import com.odsaprojects.prod.entities.Directores;
 import com.odsaprojects.prod.entities.Equipos;
 import com.odsaprojects.prod.entities.Usuarios;
@@ -44,7 +43,7 @@ public class DirectoresAdmBean implements Serializable {
 	
 	private DirectoresDao dao;
 	private EquiposDao daoEquipo;
-	private UsuariosDao daoUsuario;
+	//private UsuariosDao daoUsuario;
 	private List<Directores> dirList;
 	
 	private int dir;
@@ -175,7 +174,7 @@ public class DirectoresAdmBean implements Serializable {
 		Directores unDirector = new Directores();
 		Usuarios unUsuario = new Usuarios();
 		dao = new DirectoresDaoImpl();
-		daoUsuario = new UsuariosDaoImpl();
+		//daoUsuario = new UsuariosDaoImpl();
 		
 		unDirector.setNombres(getNombres());
 		unDirector.setApellidos(getApellidos());

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -6,8 +6,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:b="http://bootsfaces.net/ui"
-    xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>Dashboard Template for BootsFaces</title>
@@ -22,39 +21,121 @@
 			<ui:insert name="sideBar">
 				<ui:include src="Templates/leftSideBar.xhtml" />
 			</ui:insert>
-			<b:column span="7" col-sm="5" offset-sm="3" col-md="7" offset="2" styleClass="main">				
-				<b:panel title="Eventos" id="targetPage3" look="primary" collapsible="true">
-					<h:form id="mainForm3">
-						<h:messages id="deleteMessages" globalOnly="true" errorClass="error" warnClass="warning" infoClass="success" />
-						<b:dataTable value="#{calendarioAdmBean.calendarioList}" var="calendario" page-length="10" 
-							row-highlight="true" print="true" excel="true" responsive="true">
-						    <b:dataTableColumn value="#{calendario.id}" />
-						    <b:dataTableColumn value="#{calendario.equipo1}" label="Equipo Local" />
-						    <b:dataTableColumn value="#{calendario.equipo2}"  label="Equipo Visita" />
-						    <b:dataTableColumn value="#{calendario.fechaHoraInicio}" label="Inicia" />
-						    <b:dataTableColumn value="#{calendario.fechaHoraFin}" label="Termina" />
-						    <b:dataTableColumn value="#{calendario.campeonato}" label="Campeonato" />								    						    	    
-					        <b:dataTableColumn label="Operaciones">
-					            <b:commandButton style="padding: 0 4px;" iconAwesome="pencil" look="link" action="#{calendarioAdmBeanAdmBean.EditarEvento(calendario)}"/>			            
-					            <b:commandButton style="padding: 0 4px;" update="@form :modalForm" 
-					            	action="#{calendarioAdmBean.LoadDeleteCalendario(calendario)}" 
-					            	oncomplete="$('.modalPseudoClass').modal();return false;" look="link" 
-					            	iconAwesome="trash" />
-					            <b:commandButton style="padding: 0 4px;" iconAwesome="calendar" look="link" action="#{campeonatosAdmBean.LoadCalendario(shamp)}"/>	
-					        </b:dataTableColumn>
-						</b:dataTable>
-					</h:form>
-					<b:modal id="amodal" title="Campeonatos" styleClass="modalPseudoClass">
-					  <p>Por favor!! confirme que desea realizar esta accion... ¿Eliminar evento?</p>	
-					  <h:form id="modalForm">							  								    
-					    <b:commandButton value="Eliminar" look="primary" action="#{calendarioAdmBean.DeleteCaendario()}" 
-						    update=":mainForm3" oncomplete="$('.modalPseudoClass').modal('hide');return false;" />
-						<b:button value="Cancelar" dismiss="modal" style="margin-left: 10%;" />
-					  </h:form>
-					</b:modal>
-				</b:panel>
+			<b:column span="7" col-sm="5" offset-sm="3" col-md="7" offset="2"
+				styleClass="main">
+				<c:choose>
+					<c:when test="#{calendarioAdmBean.listarCalendario}">
+						<b:panel title="Eventos" id="targetPage3" look="primary"
+							collapsible="true">
+							<h:form id="mainForm3">
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
+								<b:dataTable value="#{calendarioAdmBean.calendarioList}"
+									var="calendario" page-length="10" row-highlight="true"
+									print="true" excel="true" responsive="true">
+									<b:dataTableColumn value="#{calendario.id}" />
+									<b:dataTableColumn value="#{calendario.nombreEquipo1}"
+										label="Equipo Local" />
+									<b:dataTableColumn value="#{calendario.nombreEquipo2}"
+										label="Equipo Visita" />
+									<b:dataTableColumn value="#{calendario.fechaHoraInicio}"
+										label="Inicia" />
+									<b:dataTableColumn value="#{calendario.fechaHoraFin}"
+										label="Termina" />
+									<b:dataTableColumn value="#{calendario.nombreCampeonato}"
+										label="Campeonato" />
+									<b:dataTableColumn label="Operaciones">
+										<b:commandButton style="padding: 0 4px;" iconAwesome="pencil"
+											look="link"
+											action="#{calendarioAdmBean.LoadEditarEvento(calendario)}" />
+										<b:commandButton style="padding: 0 4px;"
+											update="@form :modalForm"
+											action="#{calendarioAdmBean.LoadDeleteCalendario(calendario.id)}"
+											oncomplete="$('.modalPseudoClass').modal();return false;"
+											look="link" iconAwesome="trash" />
+										<b:commandButton style="padding: 0 4px;"
+											iconAwesome="calendar" look="link"
+											action="#{calendarioAdmBean.LoadCalendario(calendario.campeonatoId)}" />
+									</b:dataTableColumn>
+								</b:dataTable>
+							</h:form>
+							<b:modal id="amodal" title="Campeonatos"
+								styleClass="modalPseudoClass">
+								<p>Por favor!! confirme que desea realizar esta accion...
+									¿Eliminar evento?</p>
+								<h:form id="modalForm">
+									<b:commandButton value="Eliminar" look="primary"
+										action="#{calendarioAdmBean.DeleteEvento()}"
+										update=":mainForm3"
+										oncomplete="$('.modalPseudoClass').modal('hide');return false;" />
+									<b:button value="Cancelar" dismiss="modal"
+										style="margin-left: 10%;" />
+								</h:form>
+							</b:modal>
+						</b:panel>
+					</c:when>
+				</c:choose>
+				<c:choose>
+					<c:when test="#{calendarioAdmBean.editarCalendario}">
+						<b:panel title="Editar Evento" id="targetPage2" look="primary"
+							collapsible="true">
+							<h:form styleClass="form-signin" id="mainForm2">
+								<h:messages id="deleteMessages" globalOnly="true"
+									errorClass="error" warnClass="warning" infoClass="success" />
+								<b:container style="">
+									<b:row>
+										<b:column medium-screen="1">
+											<h:outputText value="Local: " for="equipo local" />
+										</b:column>
+										<b:column medium-screen="3">
+											<h:outputText value="#{calendarioAdmBean.nombreEquipo1}" />
+										</b:column>
+										<b:column medium-screen="1">
+											<h:outputText value="Visitante:" for="equipo visitante" />
+										</b:column>
+										<b:column medium-screen="3">
+											<h:outputText value="#{calendarioAdmBean.nombreEquipo2}" />
+										</b:column>
+									</b:row>
+									<br/><br/>
+									<b:row>
+										<b:column medium-screen="1">
+											<h:outputText value="Fecha de Inicio" for="fecha inicio" />
+										</b:column>
+										<b:column medium-screen="3">
+											<b:dateTimePicker value="#{calendarioAdmBean.fechaHoraInicio}"
+												icon-position="right" show-date="true" show-time="true"
+												show-icon="true" />
+										</b:column>
+										<b:column medium-screen="1">
+											<h:outputText value="Fecha de Fin" for="fecha de fin" />
+										</b:column>
+										<b:column span="3">
+											<b:dateTimePicker value="#{calendarioAdmBean.fechaHoraFin}"
+												icon-position="right" show-date="true" show-time="true"
+												show-icon="true" />
+										</b:column>
+									</b:row>
+									<br/><br/>
+									<b:row>
+										<b:column span="2" offset="2">
+											<b:commandButton look="primary btn-block"
+												action="#{calendarioAdmBean.EditarEvento()}"
+												value="Actualizar" style="width: 50%" />
+										</b:column>
+										<b:column span="2" offset="1">
+											<b:commandButton look="danger"
+												actionListener="#{calendarioAdmBean.LoadListarEventos()}"
+												immediate="true" value="Salir" style="width: 50%" />
+										</b:column>
+									</b:row>
+								</b:container>
+							</h:form>
+						</b:panel>
+					</c:when>
+				</c:choose>
 			</b:column>
-			<b:column style="width: 25%; padding: 20px;">	
+			<b:column style="width: 25%; padding: 20px;">
 				<ui:insert name="auspBar">
 					<ui:include src="Templates/auspBar.xhtml" />
 				</ui:insert>

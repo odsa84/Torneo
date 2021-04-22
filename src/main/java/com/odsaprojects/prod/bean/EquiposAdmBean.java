@@ -30,12 +30,14 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import com.odsaprojects.prod.dao.CalendarioDao;
 import com.odsaprojects.prod.dao.DirectoresDao;
 import com.odsaprojects.prod.dao.EquiposDao;
 import com.odsaprojects.prod.dao.JugadoresDao;
 import com.odsaprojects.prod.dao.impl.DirectoresDaoImpl;
 import com.odsaprojects.prod.dao.impl.EquiposDaoImpl;
 import com.odsaprojects.prod.dao.impl.JugadoresDaoImpl;
+import com.odsaprojects.prod.entities.Calendario;
 import com.odsaprojects.prod.entities.Directores;
 import com.odsaprojects.prod.entities.Equipos;
 import com.odsaprojects.prod.entities.Jugadores;
@@ -68,6 +70,7 @@ public class EquiposAdmBean implements Serializable {
 	
 	private DirectoresDao dao;
 	private EquiposDao daoEquipo;	
+	private CalendarioDao daoCalendario;
 	private List<Directores> dirList;
 	private List<Equipos> equipList;
 	private Equipos edtEquipo;
@@ -79,8 +82,10 @@ public class EquiposAdmBean implements Serializable {
 	@Inject
 	SessionUtils session;
 
+	@Inject
 	@SuppressWarnings("rawtypes")
-	public EquiposAdmBean() {
+	public EquiposAdmBean(CalendarioDao daoCalendario) {
+		this.daoCalendario = daoCalendario;
 		equipo = true;
 		listaEquipos = false;
 		editarEquipo = false;
@@ -233,7 +238,7 @@ public class EquiposAdmBean implements Serializable {
 			Directores dirEquipo = dao.BuscarDirectorPorId(dir, idUser);
 			unEquipo.setDirectores(dirEquipo);
 		
-			if (daoEquipo.RegistrarEquipo(unEquipo)) {
+			if (daoEquipo.ActualizarEquipo(unEquipo)) {
 				if(this.dirAntes != dir) {
 					Directores dirEquipoAntes = dao.BuscarDirectorPorId(dirAntes, idUser);
 					dirEquipoAntes.setDireqp(0);
@@ -249,6 +254,7 @@ public class EquiposAdmBean implements Serializable {
 			} else {
 				session.sendErrorMessageToView(Constantes.EDITTEAMSERROR);
 			}
+			EditarEquipos(unEquipo);
 		} catch (Exception e) {
 			LOG.error(e.getMessage());
 			session.sendErrorMessageToView(Constantes.EDITTEAMSDIRERROR);
@@ -323,8 +329,21 @@ public class EquiposAdmBean implements Serializable {
 					}
 				}
 			}
-			if(daoEquipo.RegistrarEquipo(eqp)) {
+			List<Calendario> calList = daoCalendario.BuscarCalendarioByEquipo(eqp.getId());
+			if(calList.size() != 0) {
+				int cont1 = 1;
+				boolean reintentar1 = true;
+				while(cont1 <= 3 && reintentar1) {
+					if(daoCalendario.ActualizarEstadoEnCeroListaCalendario(calList)) {
+						reintentar1 = false;
+					}
+					
+					cont1 += cont1;
+				}
+			}
+			if(daoEquipo.ActualizarEquipo(eqp)) {
 				equipList = daoEquipo.DevolverEquipos(idUser);
+				//equipList.remove(eqp);
 				session.sendMessageToView("Eliminado " + eqp.getNombre());
 			} else {
 				session.sendErrorMessageToView("Error al eliminar el equipo");

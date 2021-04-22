@@ -49,6 +49,25 @@ public class CalendarioDaoImpl implements CalendarioDao {
 		return flag;
 	}
 	
+	public boolean ActualizarEstadoEnCeroListaCalendario(List<Calendario> calList) {
+		boolean flag = true;
+		
+		try {
+			for(Calendario cal: calList) {
+				cal.setEstado(0);
+				em.getTransaction().begin();
+				em.merge(cal);
+				em.getTransaction().commit();
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+			
+			flag = false;
+		}
+		
+		return flag;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Calendario> DevolverCalendario() {
 		List<Calendario> result = null;
@@ -107,6 +126,23 @@ public class CalendarioDaoImpl implements CalendarioDao {
 			Query query = em.createNamedQuery("calendario.findByMonthAndYear");
 			query.setParameter("mes", mes);
 			query.setParameter("anio", anio);
+			if (query.getResultList().size() != 0) {
+				result = query.getResultList();
+			}
+		} catch (Exception e) {
+			LOG.error(e.getMessage(), e);
+		}
+		
+		return result;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Calendario> BuscarCalendarioByEquipo(long idEqp) {
+		List<Calendario> result = new ArrayList<Calendario>();
+		
+		try {
+			Query query = em.createNamedQuery("calendario.findByEquipos");
+			query.setParameter("idEqp", idEqp);
 			if (query.getResultList().size() != 0) {
 				result = query.getResultList();
 			}

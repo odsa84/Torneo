@@ -23,10 +23,13 @@
 				<ui:include src="Templates/leftSideBar.xhtml" />
 			</ui:insert>
 			<b:column col-sm="9" offset-sm="3" col-md="10" offset="2" styleClass="main">
-
+				
 			</b:column>
 		</b:row>
 	</b:container>
+	<ui:insert name="navBar">
+		<ui:include src="Templates/footerNavBar.xhtml" />
+	</ui:insert>
 	<style type="text/css">
 .sub-header {
 	border-bottom: 1px solid #eee;
@@ -129,6 +132,27 @@
 	background:none repeat scroll 0 0 #F9F9F9;
 	border-top:1px solid #BBBBBB;
 }
+
+.ui-datalist .ui-datalist-content {
+        border:0 none
+    }
+     
+    .ui-datalist ul {
+        padding:0px 10px 0 20px;
+        margin: 5px 0;
+    }
+     
+    .label, .value {
+        vertical-align: top
+    }
+ 
+    .output {
+        font-weight: bold
+    }
+     
+    .ui-selectmanymenu {
+        width: 175px;
+    }
 </style>
 </h:body>
 </html>

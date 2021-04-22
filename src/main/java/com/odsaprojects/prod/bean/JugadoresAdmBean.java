@@ -313,6 +313,10 @@ public class JugadoresAdmBean implements Serializable {
 		editarJugador = true;
 	}
 	
+	public void LoadListarJugadores() {
+		session.redirectPage("jugadoresAdm.xhtml?ply=0");
+	}
+	
 	public void LoadDeleteJugador(Jugadores ply) {
 		this.id = ply.getId();
 	}

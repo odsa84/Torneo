@@ -60,20 +60,24 @@
 				<ui:include src="Templates/leftSideBar.xhtml" />
 			</ui:insert>
 		</b:row>
-		<b:column span="8" col-sm="3" offset-sm="1" col-md="3" offset="2" styleClass="main">			
+		<b:column span="8" col-sm="3" offset-sm="1" col-md="3" offset="2" styleClass="main">
+			<c:choose>
+				<c:when test="#{calendarioAdmBean.calendario}">			
 			<h:form id="mainForm1">
 				<h:inputText id="inputId" value="#{calendarioAdmBean.idShp}" style="display:none"/>
 				<h:inputText id="inputDateTime" value="#{calendarioAdmBean.lastDateTime}" style="display:none"/>
 				<h2>Campeonato: #{calendarioAdmBean.nombreShp}</h2>				
 				<b:commandButton value="Crear eventos" look="success" style="padding: 0 4px;" update="@form :modalForm" 
-				action="#{calendarioAdmBean.BuscarEquipos()}" oncomplete="$('#amodal').modal();return false;" />	
+				actionListener="#{calendarioAdmBean.FillEquipos()}" oncomplete="$('#amodal').modal();return false;" />	
 				<b:button value="Mostrar eventos" look="primary" style="padding: 0 4px; margin-left: 2%;"
 				onclick="$('#amodal1').modal();tableWidgetVar.DataTable().responsive.recalc();" />					
 				<br/><br/>
 			</h:form>
 			<h:form id="calendarForm">
 				<div id="calendar"></div>
-			</h:form>			
+			</h:form>	
+			</c:when>
+			</c:choose>		
 			<b:modal id="amodal" title="Calendario" styleClass="modalPseudoClass" closable="false" close-on-escape="false"
 			backdrop="false">	
 			  <h:form id="modalForm">
@@ -91,11 +95,11 @@
 		                    colMd="7"
 							labelColMd="7" />
 	                    <br/>
-  						</b:column>
+					</b:column>
 				</b:row>
 				<b:row>
 					<b:column medium-screen="3">
-						<h:outputText value="Equipo 1(Local)" for="equipo1" />
+						<h:outputText value="Local" for="equipo1" />
 					</b:column>
 					<b:column medium-screen="7">
 						<b:formGroup>
@@ -107,7 +111,7 @@
 						<br/><br/>
 					</b:column>						
 					<b:column medium-screen="3">
-						<h:outputText value="Equipo 2(Visitante)" for="equipo2" />
+						<h:outputText value="Visitante" for="equipo2" />
 					</b:column>
 					<b:column medium-screen="7">
 						<b:formGroup>
@@ -121,7 +125,8 @@
 				</b:row>
 				<b:commandButton value="Crear" look="primary" action="#{calendarioAdmBean.CrearEvento()}" 
 				    update=":modalForm" style="margin-left: 30%;" />
-				<b:commandButton value="Salir" look="danger" action="#{calendarioAdmBean.ActualizarCalendar()}" dismiss="modal" style="margin-left: 10%;" />					  								    			    
+				<b:commandButton value="Salir" look="danger" action="#{calendarioAdmBean.ActualizarCalendar()}" 
+				dismiss="modal" style="margin-left: 10%;" />					  								    			    
 			  </h:form>
 			</b:modal>	
 			
@@ -139,8 +144,96 @@
 					</b:dataTable>
 				</h:form>				  								    			    
 			</b:modal>
-			
-			<b:modal id="deleteModal" title="Desea eliminar el Evento:" closable="false" close-on-escape="false"
+			<!-- FORM TO PLAY -->
+			<c:choose>
+				<c:when test="#{calendarioAdmBean.jugarPartido}">	
+				<h:form id="mainForm33">
+					<b:row>
+						<ui:insert name="sideBar">
+							<ui:include src="Templates/leftSideBar.xhtml" />
+						</ui:insert>
+						<b:row>
+							<b:column col-sm="2" offset-sm="2" col-md="4" styleClass="main">
+								<h:form>
+									<b:row>
+										<b:column col-xs="12" col-sm="3" col-md="3">
+											<h:selectOneListbox value="#{calendarioAdmBean.selectedJugadores}" style="width: 300px">
+												<f:selectItems value="#{calendarioAdmBean.jugadores}" var="jugador"
+													itemLabel="#{jugador.camiseta} - #{jugador.nombres} #{jugador.apellidos}" itemValue="#{jugador}" />
+											</h:selectOneListbox>
+										</b:column>
+									</b:row>
+									<b:row style="margin-top: 5%;">
+										<b:column col-xs="12" col-sm="3" col-md="8" offset="1">
+											<b:commandButton value="Gol" look="success"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" />
+											<b:commandButton value="TR" look="danger"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" style="margin-left: 2%;" />
+											<b:commandButton value="TA" look="warning"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" style="margin-left: 2%;" />
+											<b:commandButton value="Falta" look="info"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" style="margin-left: 2%;" />
+										</b:column>
+									</b:row>
+								</h:form>
+							</b:column>
+							
+							<b:column col-xs="12" col-sm="6" col-md="2" styleClass="main">
+								<h:form>
+								<b:row>
+									<b:column>
+										<b:commandButton value="Gol" look="success"
+											action="#{calendarioAdmBean.JugadorSeleccionado()}" />
+									</b:column>
+								</b:row>
+								</h:form>
+							</b:column>
+							
+							<b:column col-xs="12" col-sm="3" col-md="4" styleClass="main">
+								<h:form>
+									<b:row style="margin-right: 30%">
+										<b:column col-xs="12" col-sm="3" col-md="3">
+											<h:selectOneListbox value="#{calendarioAdmBean.selectedJugadores1}" style="width: 300px">
+												<f:selectItems value="#{calendarioAdmBean.jugadores1}" var="jugador"
+													itemLabel="#{jugador.camiseta} - #{jugador.nombres} #{jugador.apellidos}" itemValue="#{jugador}" />
+											</h:selectOneListbox>
+										</b:column>
+									</b:row>
+									<b:row style="margin-top: 5%;">
+										<b:column col-xs="12" col-sm="3" col-md="8" offset="1">
+											<b:commandButton value="Gol" look="success"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" />
+											<b:commandButton value="TR" look="danger"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" style="margin-left: 2%;" />
+											<b:commandButton value="TA" look="warning"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" style="margin-left: 2%;" />
+											<b:commandButton value="Falta" look="info"
+												action="#{calendarioAdmBean.JugadorSeleccionado()}" style="margin-left: 2%;" />
+										</b:column>
+									</b:row>
+								</h:form>
+							</b:column>
+						</b:row>
+					</b:row>
+				</h:form>
+				<b:navBar brandHref="indexAdm.xhtml" inverse="true" fixed="bottom" sticky="false">		
+					<b:navbarLinks>
+						<h:form id="footForm" styleClass="navbar-form navbar-right">
+							<f:event type="postAddToView" listener="#{jugarPartidoAdmBean.InicializarCronometro}" />
+						<b:row>
+							<b:column col-xs="12" col-sm="3" col-md="4" />
+							<b:column col-xs="12" col-sm="3" col-md="8" offset="12">
+								<b:commandButton value="Comensar" look="success" action="#{jugarPartidoAdmBean.ComensarPartido()}" style="margin-left: 10%;" />
+								<!-- <b:label id="crono" value="Cronometro: #{jugarPartidoAdmBean.labelCrono}" ajax="true" update="@form :crono" /> -->
+							</b:column>
+						</b:row>
+						</h:form>
+					</b:navbarLinks>
+				</b:navBar>				  								    			    
+			</c:when>
+			</c:choose>
+			<!-- FIN FORM TO LAY -->
+			<b:modal id="deleteModal" title="Acciones sobre el Evento:" closable="false" close-on-escape="false"
 				backdrop="false">	
 			  <h5 id="eventTitle" class="modal-title" style="margin-left: 30%;"></h5>			  
 			  <h:form id="modalForm2">
@@ -152,12 +245,11 @@
 					</b:column>
 					<b:column span="4">
 						<h5 id="eventInicio" class="modal-title"></h5>
-						<h:inputText id="eventFechaInicio" value="" name="eventFechaInicioInput" style="display:none"/>
-						</b:column>
+					</b:column>
 				  </b:row>
 				  <b:row style="margin-left: 15%;">
 					<b:column medium-screen="4">
-						<h:outputText value="Fecha de Fin:" for="fecha de inicio" />						
+						<h:outputText value="Fecha de Fin:" for="fecha de fin" />						
 					</b:column>
 					<b:column span="4">
 						<h5 id="eventFin" class="modal-title"></h5>
@@ -165,10 +257,11 @@
 	 				</b:column>	 				
 				  </b:row>				
 				  <b:commandButton value="Eliminar" look="primary" action="#{calendarioAdmBean.DeleteEvento()}" 
-				    update=":modalForm2" style="margin-left: 30%;" disabled="#{calendarioAdmBean.disabled}" >
-				    <f:param id="even" name="eventId" value="" />
-				  </b:commandButton>
-				  <b:commandButton value="Salir" look="danger" action="#{calendarioAdmBean.ActualizarCalendar()}" dismiss="modal" style="margin-left: 10%;" />					  								    			    
+				    update="@form :modalForm2" style="margin-left: 30%;" disabled="#{calendarioAdmBean.disabled}" />
+				  <b:commandButton value="Jugar Partido" look="primary" action="#{calendarioAdmBean.JugarPartido()}" 
+				    update="@form :modalForm2" style="margin-left: 30%;" disabled="#{calendarioAdmBean.disabled}" />
+				  <b:commandButton value="Salir" look="danger" action="#{calendarioAdmBean.ActualizarCalendar()}" 
+				  dismiss="modal" style="margin-left: 10%;" />					  								    			    
 			</h:form>
 			</b:modal>
 					

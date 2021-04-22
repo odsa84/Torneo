@@ -27,7 +27,9 @@ import javax.persistence.Table;
 	@NamedQuery(name = "calendario.findByIdCampeonato", query = "SELECT c FROM Calendario c WHERE c.campeonato = :idCampeonato "
 			+ "AND c.estado = 1"),
 	@NamedQuery(name = "calendario.findByMonthAndYear", query = "SELECT c FROM Calendario c WHERE MONTH(c.fechaHoraInicio) = :mes "
-			+ "AND YEAR(c.fechaHoraInicio) = :anio")})
+			+ "AND YEAR(c.fechaHoraInicio) = :anio"),
+	@NamedQuery(name = "calendario.findByEquipos", query = "SELECT c FROM Calendario c WHERE c.equipo1 = :idEqp "
+			+ "OR c.equipo2 = :idEqp AND c.estado = 1")})
 public class Calendario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
